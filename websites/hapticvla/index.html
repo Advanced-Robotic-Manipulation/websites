@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-color:#2563eb;
+  --text-color:#1e293b;
+  --text-light:#64748b;
+  --background:#ffffff;
+  --surface:#f1f5f9;
+  --border:#e2e8f0;
+  --shadow:0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-lg:0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--background);
+  color:var(--text-color);
+}
+
+.container{
+  max-width:1000px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+.header{
+  background:linear-gradient(135deg,var(--surface) 0%, #ffffff 100%);
+  padding:70px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.header-content{text-align:center}
+
+.title{
+  font-size:clamp(2.5rem,5vw,3.5rem);
+  font-weight:700;
+  margin:0 0 20px 0;
+  background:linear-gradient(135deg,var(--primary-color),#7c3aed);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+  font-size:1.25rem;
+  color:var(--text-light);
+  margin-bottom:30px;
+}
+
+.authors{
+  font-size:1.1rem;
+  margin:20px 0;
+  font-weight:500;
+}
+
+.contribution{
+  font-size:0.95rem;
+  margin-bottom:15px;
+  color:var(--text-light);
+  font-style:italic;
+}
+
+.institution{
+  font-size:1rem;
+  margin-bottom:40px;
+  color:var(--text-light);
+  font-weight:500;
+}
+
+.links{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.link-button{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 26px;
+  background:var(--background);
+  border:2px solid var(--border);
+  border-radius:12px;
+  text-decoration:none;
+  color:var(--text-color);
+  font-weight:500;
+  transition:all .2s ease;
+  box-shadow:var(--shadow);
+}
+
+.link-button:hover{
+  border-color:var(--primary-color);
+  color:var(--primary-color);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lg);
+}
+
+.link-button img{
+  width:20px;
+  height:20px;
+}
+
+@media(max-width:768px){
+  .links{
+    flex-direction:column;
+    align-items:center;
+  }
+  .link-button{
+    width:200px;
+    justify-content:center;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+<div class="header-content">
+
+<h1 class="title">HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing</h1>
+
+<div class="authors">
+Konstantin Gubernatorov*, Mikhail Sannikov*, Ilya Mikhalchuk*, Egor Kuznetsov, Makar Artemov, Ogunwoye Faith Ouwatobi, Marcelino Fernando, Artem Asanov, Ziang Guo, and Dzmitry Tsetserukou
+</div>
+
+<div class="contribution">*Equal contribution</div>
+
+<div class="institution">Skolkovo Institute of Science and Technology</div>
+
+<div class="links">
+
+<a href="#" class="link-button" target="_blank">
+<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+Code
+</a>
+
+<a href="#" class="link-button" target="_blank">
+<img src="https://raw.githubusercontent.com/SelfAI-research/AnywhereVLA/main/.github/workflows/arxiv.svg" alt="arXiv">
+Paper
+</a>
+
+<a href="#" class="link-button" target="_blank">
+<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace">
+Model
+</a>
+
+<a href="#" class="link-button" target="_blank">
+<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace">
+Data
+</a>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
