@@ -349,6 +349,25 @@ section.sec {
 .prose em { color: var(--fg); }
 .prose strong { color: var(--fg); font-weight: 600; }
 
+/* Abstract prose stretches the full column width. At wide widths we split
+   it into two columns so line length stays readable. */
+#abstract .prose {
+  max-width: none;
+  font-size: 1.05rem;
+}
+@media (min-width: 960px) {
+  #abstract .prose {
+    column-count: 2;
+    column-gap: 3rem;
+    column-rule: 1px solid var(--hair);
+  }
+  #abstract .prose p {
+    break-inside: avoid-column;
+    margin: 0 0 1.1em 0;
+  }
+  #abstract .prose p:first-child { margin-top: 0; }
+}
+
 /* ----------------------------------------------------------------------------
    Abstract + Results chart (grouped bar chart)
 ---------------------------------------------------------------------------- */
@@ -666,6 +685,84 @@ section.sec {
   height: 100%;
   border: 0;
 }
+
+/* --- click-through thumbnail variant --- */
+a.video-frame.video-link {
+  display: block;
+  cursor: pointer;
+  transition: border-color 220ms ease;
+}
+a.video-frame.video-link:hover { border-color: var(--accent); }
+a.video-frame.video-link img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.78;
+  transition: opacity 220ms ease, transform 480ms cubic-bezier(.2,.65,.2,1);
+}
+a.video-frame.video-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10,10,11,0.25) 0%,
+    rgba(10,10,11,0.05) 40%,
+    rgba(10,10,11,0.55) 100%
+  );
+  pointer-events: none;
+  transition: background 220ms ease;
+}
+a.video-frame.video-link:hover img {
+  opacity: 1;
+  transform: scale(1.02);
+}
+a.video-frame.video-link .play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(70px, 9vw, 100px);
+  height: clamp(70px, 9vw, 100px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 30px rgba(0,0,0,0.55));
+}
+a.video-frame.video-link .play-btn svg { width: 100%; height: 100%; display: block; }
+a.video-frame.video-link .play-btn circle {
+  fill: rgba(10,10,11,0.55);
+  stroke: #fff;
+  stroke-width: 1.5;
+  transition: fill 220ms ease, stroke 220ms ease;
+}
+a.video-frame.video-link .play-btn polygon { fill: #fff; transition: fill 220ms ease; }
+a.video-frame.video-link:hover .play-btn circle {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+a.video-frame.video-link:hover .play-btn polygon { fill: #fff; }
+
+a.video-frame.video-link .video-tag {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(10,10,11,0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 7px 11px;
+  border: 1px solid rgba(255,255,255,0.14);
+  transition: border-color 220ms ease, color 220ms ease;
+}
+a.video-frame.video-link:hover .video-tag {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .video-caption {
   font-family: var(--mono);
   font-size: 11.5px;

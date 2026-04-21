@@ -393,16 +393,33 @@
       <span class="sec-sub">Real-world rollouts · unedited footage</span>
     </div>
 
-    <div class="video-frame">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/rYLjZGsskqs?rel=0&modestbranding=1"
-        title="HapticVLA — Real-world rollouts"
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-        referrerpolicy="strict-origin-when-cross-origin"
-      ></iframe>
-    </div>
+    <!--
+      Click-through thumbnail. The YouTube video currently has embedding
+      disabled (YouTube Studio → Advanced → Allow embedding). This link
+      opens the video on youtube.com in a new tab. To switch to an inline
+      player, either:
+        (a) enable embedding on the video, then restore the iframe markup,
+        or
+        (b) drop the source MP4 into assets/ and replace this block with
+            <video controls src="assets/hapticvla.mp4" poster="..."></video>.
+    -->
+    <a class="video-frame video-link"
+       href="https://www.youtube.com/watch?v=rYLjZGsskqs"
+       target="_blank" rel="noopener"
+       aria-label="Watch HapticVLA demo on YouTube (opens in new tab)">
+      <img
+        src="https://img.youtube.com/vi/rYLjZGsskqs/maxresdefault.jpg"
+        onerror="this.onerror=null;this.src='https://img.youtube.com/vi/rYLjZGsskqs/hqdefault.jpg';"
+        alt="HapticVLA demo video"
+        loading="lazy">
+      <span class="play-btn" aria-hidden="true">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="38" />
+          <polygon points="32,24 58,40 32,56" />
+        </svg>
+      </span>
+      <span class="video-tag">Watch on YouTube →</span>
+    </a>
     <div class="video-caption">Jar · Waffles · Egg — HapticVLA vs. baselines</div>
 
   </div>
@@ -419,10 +436,10 @@
     </div>
 
     <p class="ablation-note ablation-lead">
-      <strong>TD</strong> <em>— Tactile Distillation.</em> All four rows are
-      HapticVLA variants; each combines the SA-RWFM teacher with or without
-      distilling tactile representations into the student, and runs inference
-      either synchronously or asynchronously.
+      <strong>TD</strong> <em>— Tactile Distillation.</em> Each configuration
+      combines the SA-RWFM teacher with or without distilling tactile
+      representations into the student, and runs inference either
+      synchronously or asynchronously.
     </p>
 
     <table class="ablation">
