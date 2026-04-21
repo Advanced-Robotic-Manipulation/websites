@@ -102,84 +102,144 @@
       <span class="sec-sub">preprint · under review</span>
     </div>
 
-    <div class="abstract-grid">
-      <div class="prose">
-        <p>
-          Tactile sensing is a crucial capability for Vision-Language-Action
-          architectures, as it enables dexterous and safe manipulation in
-          contact-rich tasks. However, reliance on dedicated tactile hardware
-          increases cost and reduces reproducibility across robotic platforms.
-        </p>
-        <p>
-          We argue that tactile-aware manipulation can be learned offline and
-          deployed without direct haptic feedback at inference. <strong>HapticVLA</strong>
-          proceeds in two tightly-coupled stages. <em>Safety-Aware Reward-Weighted
-          Flow Matching</em> (SA-RWFM) trains a flow-matching action expert on
-          precomputed tactile safety rewards that penalize excessive grasping
-          force and suboptimal trajectories. <em>Tactile Distillation</em> then
-          transfers this tactile-aware capability into a standard VLA by
-          distilling a compact tactile token from the SA-RWFM teacher and
-          training a student that predicts it from vision and proprioception
-          alone.
-        </p>
-        <p>
-          On real-world experiments, HapticVLA achieves a mean success rate of
-          <strong>86.7%</strong>, consistently outperforming baseline VLAs —
-          including versions provided with direct tactile feedback during
-          inference.
-        </p>
-      </div>
-
-      <figure class="mean-chart">
-        <figcaption class="chart-title">Mean success rate (%)</figcaption>
-        <svg class="chart" viewBox="0 0 320 240" role="img" aria-label="Mean success rate across four configurations: without Tactile Distillation async 81.7%, without Tactile Distillation 75.0%, with Tactile Distillation async 80.0%, HapticVLA with Tactile Distillation 86.7%.">
-          <!-- axes -->
-          <g class="chart-axes" stroke-linecap="round">
-            <line x1="36" x2="316" y1="200" y2="200" />
-            <line x1="36" x2="316" y1="150" y2="150" class="grid" />
-            <line x1="36" x2="316" y1="100" y2="100" class="grid" />
-            <line x1="36" x2="316" y1="50"  y2="50"  class="grid" />
-          </g>
-          <g class="chart-ytick" text-anchor="end">
-            <text x="28" y="204">0</text>
-            <text x="28" y="154">25</text>
-            <text x="28" y="104">50</text>
-            <text x="28" y="54">75</text>
-            <text x="28" y="24">100</text>
-          </g>
-
-          <!-- bars (200 = 0%, 0 = 100%) -> y = 200 - v*2 -->
-          <!-- w/o TD async: 81.7 -->
-          <g class="bar">
-            <rect x="54"  y="36.6" width="44" height="163.4" />
-            <text class="bar-val" x="76"  y="28">81.7</text>
-            <text class="bar-lbl" x="76"  y="220">w/o TD, async</text>
-          </g>
-          <!-- w/o TD: 75 -->
-          <g class="bar">
-            <rect x="118" y="50"   width="44" height="150" />
-            <text class="bar-val" x="140" y="42">75.0</text>
-            <text class="bar-lbl" x="140" y="220">w/o TD</text>
-          </g>
-          <!-- w/ TD async: 80 -->
-          <g class="bar">
-            <rect x="182" y="40"   width="44" height="160" />
-            <text class="bar-val" x="204" y="32">80.0</text>
-            <text class="bar-lbl" x="204" y="220">w/ TD, async</text>
-          </g>
-          <!-- w/ TD (Ours): 86.7 -->
-          <g class="bar ours">
-            <rect x="246" y="26.6" width="44" height="173.4" />
-            <text class="bar-val" x="268" y="18">86.7</text>
-            <text class="bar-lbl" x="268" y="220">w/ TD</text>
-            <text class="bar-ours" x="268" y="234">ours</text>
-          </g>
-        </svg>
-        <figcaption class="chart-note">
-          3 contact-rich tasks · 20 trials each
-        </figcaption>
-      </figure>
+    <div class="prose">
+      <p>
+        Tactile sensing is a crucial capability for Vision-Language-Action
+        architectures, as it enables dexterous and safe manipulation in
+        contact-rich tasks. However, reliance on dedicated tactile hardware
+        increases cost and reduces reproducibility across robotic platforms.
+      </p>
+      <p>
+        We argue that tactile-aware manipulation can be learned offline and
+        deployed without direct haptic feedback at inference.
+        <strong>HapticVLA</strong> proceeds in two tightly-coupled stages.
+        <em>Safety-Aware Reward-Weighted Flow Matching</em> (SA-RWFM) trains a
+        flow-matching action expert on precomputed tactile safety rewards that
+        penalize excessive grasping force and suboptimal trajectories.
+        <em>Tactile Distillation</em> then transfers this tactile-aware
+        capability into a standard VLA by distilling a compact tactile token
+        from the SA-RWFM teacher and training a student that predicts it from
+        vision and proprioception alone.
+      </p>
+      <p>
+        On real-world experiments, HapticVLA achieves a mean success rate of
+        <strong>86.7%</strong>, consistently outperforming baseline VLAs —
+        including versions provided with direct tactile feedback during
+        inference.
+      </p>
     </div>
+
+    <figure class="results-chart">
+      <figcaption class="chart-title">Success rate — HapticVLA vs. baselines</figcaption>
+      <div class="chart-wrap">
+        <svg class="chart" viewBox="0 0 900 420" role="img"
+             aria-label="Grouped bar chart comparing five models on three tasks and overall mean. Jar pick-and-place: SmolVLA 50%, SmolVLA with SA-RWFM 55%, X-VLA 0%, VLA-0 0%, HapticVLA 75%. Waffles pick-and-place: SmolVLA 70%, SmolVLA with SA-RWFM 85%, X-VLA 0%, VLA-0 0%, HapticVLA 90%. Egg pick-and-place: SmolVLA 50%, SmolVLA with SA-RWFM 85%, X-VLA 0%, VLA-0 0%, HapticVLA 95%. Mean: SmolVLA 56.7%, SmolVLA with SA-RWFM 75.0%, X-VLA 0%, VLA-0 0%, HapticVLA 86.7%.">
+
+          <!-- legend ------------------------------------------------------- -->
+          <g class="legend">
+            <rect class="sw s0" x="80"  y="10" width="12" height="12"/>
+            <text class="lbl"  x="98"  y="20">SmolVLA</text>
+            <rect class="sw s1" x="168" y="10" width="12" height="12"/>
+            <text class="lbl"  x="186" y="20">SmolVLA w/ SA-RWFM</text>
+            <rect class="sw s2" x="356" y="10" width="12" height="12"/>
+            <text class="lbl"  x="374" y="20">X-VLA</text>
+            <rect class="sw s3" x="432" y="10" width="12" height="12"/>
+            <text class="lbl"  x="450" y="20">VLA-0</text>
+            <rect class="sw s4" x="508" y="10" width="12" height="12"/>
+            <text class="lbl"  x="526" y="20">HapticVLA (Ours)</text>
+          </g>
+
+          <!-- y-axis ------------------------------------------------------- -->
+          <g class="axes">
+            <line x1="80"  x2="880" y1="370" y2="370" class="axis"/>
+            <line x1="80"  x2="880" y1="290" y2="290" class="grid"/>
+            <line x1="80"  x2="880" y1="210" y2="210" class="grid"/>
+            <line x1="80"  x2="880" y1="130" y2="130" class="grid"/>
+            <line x1="80"  x2="880" y1="50"  y2="50"  class="grid"/>
+          </g>
+          <g class="ytick" text-anchor="end">
+            <text x="72" y="374">0%</text>
+            <text x="72" y="294">25%</text>
+            <text x="72" y="214">50%</text>
+            <text x="72" y="134">75%</text>
+            <text x="72" y="54">100%</text>
+          </g>
+
+          <!-- Group 0 · Jar ----------------------------------------------- -->
+          <g class="grp">
+            <rect class="bar s0" x="99"  y="210"  width="30" height="160"/>
+            <rect class="bar s1" x="132" y="194"  width="30" height="176"/>
+            <rect class="bar s2" x="165" y="368"  width="30" height="2"/>
+            <rect class="bar s3" x="198" y="368"  width="30" height="2"/>
+            <rect class="bar s4" x="231" y="130"  width="30" height="240"/>
+
+            <text class="val s0" x="114" y="204">50%</text>
+            <text class="val s1" x="147" y="188">55%</text>
+            <text class="val s2" x="180" y="360">0%</text>
+            <text class="val s3" x="213" y="360">0%</text>
+            <text class="val s4" x="246" y="124">75%</text>
+
+            <text class="xlbl" x="180" y="395">Jar pick-and-place</text>
+          </g>
+
+          <!-- Group 1 · Waffles ------------------------------------------- -->
+          <g class="grp">
+            <rect class="bar s0" x="299" y="146"  width="30" height="224"/>
+            <rect class="bar s1" x="332" y="98"   width="30" height="272"/>
+            <rect class="bar s2" x="365" y="368"  width="30" height="2"/>
+            <rect class="bar s3" x="398" y="368"  width="30" height="2"/>
+            <rect class="bar s4" x="431" y="82"   width="30" height="288"/>
+
+            <text class="val s0" x="314" y="140">70%</text>
+            <text class="val s1" x="347" y="92">85%</text>
+            <text class="val s2" x="380" y="360">0%</text>
+            <text class="val s3" x="413" y="360">0%</text>
+            <text class="val s4" x="446" y="76">90%</text>
+
+            <text class="xlbl" x="380" y="395">Waffles pick-and-place</text>
+          </g>
+
+          <!-- Group 2 · Egg ----------------------------------------------- -->
+          <g class="grp">
+            <rect class="bar s0" x="499" y="210"  width="30" height="160"/>
+            <rect class="bar s1" x="532" y="98"   width="30" height="272"/>
+            <rect class="bar s2" x="565" y="368"  width="30" height="2"/>
+            <rect class="bar s3" x="598" y="368"  width="30" height="2"/>
+            <rect class="bar s4" x="631" y="66"   width="30" height="304"/>
+
+            <text class="val s0" x="514" y="204">50%</text>
+            <text class="val s1" x="547" y="92">85%</text>
+            <text class="val s2" x="580" y="360">0%</text>
+            <text class="val s3" x="613" y="360">0%</text>
+            <text class="val s4" x="646" y="60">95%</text>
+
+            <text class="xlbl" x="580" y="395">Egg pick-and-place</text>
+          </g>
+
+          <!-- Group 3 · Mean ---------------------------------------------- -->
+          <g class="grp">
+            <rect class="bar s0" x="699" y="188.6" width="30" height="181.4"/>
+            <rect class="bar s1" x="732" y="130"   width="30" height="240"/>
+            <rect class="bar s2" x="765" y="368"   width="30" height="2"/>
+            <rect class="bar s3" x="798" y="368"   width="30" height="2"/>
+            <rect class="bar s4" x="831" y="92.6"  width="30" height="277.4"/>
+
+            <text class="val s0" x="714" y="182">56.7%</text>
+            <text class="val s1" x="747" y="124">75.0%</text>
+            <text class="val s2" x="780" y="360">0%</text>
+            <text class="val s3" x="813" y="360">0%</text>
+            <text class="val s4" x="846" y="86">86.7%</text>
+
+            <text class="xlbl" x="780" y="395">Mean</text>
+          </g>
+
+        </svg>
+      </div>
+      <figcaption class="chart-note">
+        n = 20 trials per task. An episode is successful iff the object
+        remains intact and is placed at the designated location.
+      </figcaption>
+    </figure>
 
   </div>
 </section>
@@ -305,11 +365,15 @@
 
         <div class="hw-tactile">
           <figure>
-            <img src="assets/tactile_sensor.jpg" alt="Tactile array" loading="lazy">
+            <div class="frame">
+              <img src="assets/tactile_sensor.jpg" alt="Tactile array" loading="lazy">
+            </div>
             <figcaption>Tactile array · 100 taxels / finger</figcaption>
           </figure>
           <figure>
-            <img src="assets/tactile_map.png" alt="Example tactile map during manipulation" loading="lazy">
+            <div class="frame">
+              <img src="assets/tactile_map.png" alt="Example tactile map during manipulation" loading="lazy">
+            </div>
             <figcaption>10×10 tactile map during grasp</figcaption>
           </figure>
         </div>
@@ -331,7 +395,7 @@
 
     <div class="video-frame">
       <iframe
-        src="https://www.youtube.com/embed/rYLjZGsskqs?rel=0&modestbranding=1"
+        src="https://www.youtube-nocookie.com/embed/rYLjZGsskqs?rel=0&modestbranding=1"
         title="HapticVLA — Real-world rollouts"
         loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -354,10 +418,17 @@
       <span class="sec-sub">n = 20 trials · per task</span>
     </div>
 
+    <p class="ablation-note ablation-lead">
+      <strong>TD</strong> <em>— Tactile Distillation.</em> All four rows are
+      HapticVLA variants; each combines the SA-RWFM teacher with or without
+      distilling tactile representations into the student, and runs inference
+      either synchronously or asynchronously.
+    </p>
+
     <table class="ablation">
       <thead>
         <tr>
-          <th>Model</th>
+          <th>Configuration</th>
           <th>Jar</th>
           <th>Waffles</th>
           <th>Egg</th>
@@ -366,33 +437,34 @@
       </thead>
       <tbody>
         <tr>
-          <td>w/o TD, async</td>
+          <td>w/o&nbsp;TD · async</td>
           <td>16 / 20</td><td>18 / 20</td><td>15 / 20</td>
           <td>81.7%</td>
         </tr>
         <tr>
-          <td>w/o TD</td>
+          <td>w/o&nbsp;TD · sync</td>
           <td>11 / 20</td><td>17 / 20</td><td>17 / 20</td>
           <td>75.0%</td>
         </tr>
         <tr>
-          <td>w/ TD, async</td>
+          <td>w/&nbsp;TD · async</td>
           <td>14 / 20</td><td>19 / 20</td><td>15 / 20</td>
           <td>80.0%</td>
         </tr>
-        <tr class="best">
-          <td>w/ TD <span class="chip">Ours</span></td>
+        <tr>
+          <td>w/&nbsp;TD · sync</td>
           <td>15 / 20</td><td>18 / 20</td><td>19 / 20</td>
-          <td><strong>86.7%</strong></td>
+          <td>86.7%</td>
         </tr>
       </tbody>
     </table>
 
     <p class="ablation-note">
-      TD substantially improves contact-rich manipulation performance; combined
-      with SA-RWFM it yields the largest mean success rate. Synchronous chunking
-      consistently outperforms async, which we attribute to temporal misalignment
-      between tactile observations and control actions under async inference.
+      TD substantially improves contact-rich manipulation; combined with
+      synchronous chunking it yields the largest mean success rate. Async
+      inference underperforms its synchronous counterpart — we attribute this
+      to temporal misalignment between tactile observations and control
+      actions under async inference.
     </p>
 
   </div>
@@ -504,7 +576,7 @@
       <div class="author"><span class="name">Artem Asanov</span><span class="role">Simulation</span></div>
       <div class="author"><span class="name">Makar Artemov</span><span class="role">Distillation</span></div>
       <div class="author"><span class="name">Ziang Guo</span><span class="role">Advising</span></div>
-      <div class="author"><span class="name">Dzmitry Tsetserukou</span><span class="role">Principal Investigator</span></div>
+      <div class="author"><span class="name">Dzmitry Tsetserukou</span><span class="role">Advising · PI</span></div>
     </div>
 
     <div class="affil-line">
