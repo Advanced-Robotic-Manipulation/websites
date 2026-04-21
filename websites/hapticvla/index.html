@@ -99,7 +99,7 @@
     <div class="sec-head">
       <span class="n">01</span>
       <h2>Abstract</h2>
-      <span class="sec-sub">IROS submission · under review</span>
+      <span class="sec-sub">preprint · under review</span>
     </div>
 
     <div class="abstract-grid">
@@ -130,14 +130,55 @@
         </p>
       </div>
 
-      <aside class="pull-stat">
-        <div class="stat-num">86.7<span class="pct">%</span></div>
-        <div class="stat-label">
-          mean success<br>
-          3 contact-rich tasks<br>
-          20 trials each
-        </div>
-      </aside>
+      <figure class="mean-chart">
+        <figcaption class="chart-title">Mean success rate (%)</figcaption>
+        <svg class="chart" viewBox="0 0 320 240" role="img" aria-label="Mean success rate across four configurations: without Tactile Distillation async 81.7%, without Tactile Distillation 75.0%, with Tactile Distillation async 80.0%, HapticVLA with Tactile Distillation 86.7%.">
+          <!-- axes -->
+          <g class="chart-axes" stroke-linecap="round">
+            <line x1="36" x2="316" y1="200" y2="200" />
+            <line x1="36" x2="316" y1="150" y2="150" class="grid" />
+            <line x1="36" x2="316" y1="100" y2="100" class="grid" />
+            <line x1="36" x2="316" y1="50"  y2="50"  class="grid" />
+          </g>
+          <g class="chart-ytick" text-anchor="end">
+            <text x="28" y="204">0</text>
+            <text x="28" y="154">25</text>
+            <text x="28" y="104">50</text>
+            <text x="28" y="54">75</text>
+            <text x="28" y="24">100</text>
+          </g>
+
+          <!-- bars (200 = 0%, 0 = 100%) -> y = 200 - v*2 -->
+          <!-- w/o TD async: 81.7 -->
+          <g class="bar">
+            <rect x="54"  y="36.6" width="44" height="163.4" />
+            <text class="bar-val" x="76"  y="28">81.7</text>
+            <text class="bar-lbl" x="76"  y="220">w/o TD, async</text>
+          </g>
+          <!-- w/o TD: 75 -->
+          <g class="bar">
+            <rect x="118" y="50"   width="44" height="150" />
+            <text class="bar-val" x="140" y="42">75.0</text>
+            <text class="bar-lbl" x="140" y="220">w/o TD</text>
+          </g>
+          <!-- w/ TD async: 80 -->
+          <g class="bar">
+            <rect x="182" y="40"   width="44" height="160" />
+            <text class="bar-val" x="204" y="32">80.0</text>
+            <text class="bar-lbl" x="204" y="220">w/ TD, async</text>
+          </g>
+          <!-- w/ TD (Ours): 86.7 -->
+          <g class="bar ours">
+            <rect x="246" y="26.6" width="44" height="173.4" />
+            <text class="bar-val" x="268" y="18">86.7</text>
+            <text class="bar-lbl" x="268" y="220">w/ TD</text>
+            <text class="bar-ours" x="268" y="234">ours</text>
+          </g>
+        </svg>
+        <figcaption class="chart-note">
+          3 contact-rich tasks · 20 trials each
+        </figcaption>
+      </figure>
     </div>
 
   </div>
@@ -216,61 +257,63 @@
         <img src="assets/robot.png" alt="Crab robotics platform" loading="lazy">
       </div>
 
-      <table class="specs">
-        <tr>
-          <td>Arms</td>
-          <td>
-            2 × LeRobot SO-101 (6&nbsp;DoF each).
-            <em>Left 7.4&nbsp;V · right 12&nbsp;V for added torque.</em>
-          </td>
-        </tr>
-        <tr>
-          <td>Gripper</td>
-          <td>
-            Custom parallel gripper, based on the open-source
-            <a href="https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper" target="_blank" rel="noopener">SO-ARM100/101 design</a>,
-            instrumented with tactile arrays.
-          </td>
-        </tr>
-        <tr>
-          <td>Tactile</td>
-          <td>
-            2 × 10×10 taxels → <strong>200 taxels @ 120&nbsp;Hz</strong>,
-            1–9&nbsp;N per taxel.
-          </td>
-        </tr>
-        <tr>
-          <td>Cameras</td>
-          <td>
-            Intel RealSense D435 (overhead) + 2 × IMX335 5&nbsp;MP wrist.
-            <em>All streams 640 × 480 @ 15&nbsp;FPS.</em>
-          </td>
-        </tr>
-        <tr>
-          <td>Compute</td>
-          <td>
-            <strong>Inference</strong>: Jetson Orin NX 16&nbsp;GB.
-            <em>Training: RTX 4090 (SA-RWFM) · H100 (distillation).</em>
-          </td>
-        </tr>
-        <tr>
-          <td>Tasks</td>
-          <td>
-            Pick-and-place — marmalade jar · waffles · egg carton.
-          </td>
-        </tr>
-      </table>
-    </div>
+      <div class="hw-right">
+        <table class="specs">
+          <tr>
+            <td>Arms</td>
+            <td>
+              2 × LeRobot SO-101 (6&nbsp;DoF each).
+              <em>Left 7.4&nbsp;V · right 12&nbsp;V for added torque.</em>
+            </td>
+          </tr>
+          <tr>
+            <td>Gripper</td>
+            <td>
+              Custom parallel gripper, based on the open-source
+              <a href="https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper" target="_blank" rel="noopener">SO-ARM100/101 design</a>,
+              instrumented with tactile arrays.
+            </td>
+          </tr>
+          <tr>
+            <td>Tactile</td>
+            <td>
+              2 × 10×10 taxels → <strong>200 taxels @ 120&nbsp;Hz</strong>,
+              1–9&nbsp;N per taxel.
+            </td>
+          </tr>
+          <tr>
+            <td>Cameras</td>
+            <td>
+              Intel RealSense D435 (overhead) + 2 × IMX335 5&nbsp;MP wrist.
+              <em>All streams 640 × 480 @ 15&nbsp;FPS.</em>
+            </td>
+          </tr>
+          <tr>
+            <td>Compute</td>
+            <td>
+              <strong>Inference</strong>: Jetson Orin NX 16&nbsp;GB.
+              <em>Training: RTX 4090 (SA-RWFM) · H100 (distillation).</em>
+            </td>
+          </tr>
+          <tr>
+            <td>Tasks</td>
+            <td>
+              Pick-and-place — marmalade jar · waffles · egg carton.
+            </td>
+          </tr>
+        </table>
 
-    <div class="hw-detail">
-      <figure>
-        <img src="assets/tactile_sensor.jpg" alt="Tactile array" loading="lazy">
-        <figcaption>100-taxel array per fingertip · 10 × 10</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/tactile_map.png" alt="Example tactile map during manipulation" loading="lazy">
-        <figcaption>Tactile map during grasp · red = high force</figcaption>
-      </figure>
+        <div class="hw-tactile">
+          <figure>
+            <img src="assets/tactile_sensor.jpg" alt="Tactile array" loading="lazy">
+            <figcaption>Tactile array · 100 taxels / finger</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/tactile_map.png" alt="Example tactile map during manipulation" loading="lazy">
+            <figcaption>10×10 tactile map during grasp</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -452,16 +495,16 @@
     </div>
 
     <div class="author-list">
-      <div class="author"><span class="name">Konstantin Gubernatorov<span class="star">*</span></span><span class="role">Method · Training</span></div>
-      <div class="author"><span class="name">Mikhail Sannikov<span class="star">*</span></span><span class="role">SA-RWFM · Distillation</span></div>
-      <div class="author"><span class="name">Ilya Mikhalchuk<span class="star">*</span></span><span class="role">Platform · Inference</span></div>
-      <div class="author"><span class="name">Marcelino Fernando</span><span class="role">Experiments</span></div>
-      <div class="author"><span class="name">Egor Kuznetsov</span><span class="role">Data</span></div>
-      <div class="author"><span class="name">Ogunwoye Faith Ouwatobi</span><span class="role">Data</span></div>
-      <div class="author"><span class="name">Artem Asanov</span><span class="role">Hardware</span></div>
-      <div class="author"><span class="name">Makar Artemov</span><span class="role">Hardware</span></div>
+      <div class="author"><span class="name">Konstantin Gubernatorov<span class="star">*</span></span><span class="role">Method · Platform · Experiments · Data</span></div>
+      <div class="author"><span class="name">Mikhail Sannikov<span class="star">*</span></span><span class="role">Hardware · Software · Training · Distillation</span></div>
+      <div class="author"><span class="name">Ilya Mikhalchuk<span class="star">*</span></span><span class="role">Hardware · Software · Inference · Data</span></div>
+      <div class="author"><span class="name">Marcelino Fernando</span><span class="role">Simulation</span></div>
+      <div class="author"><span class="name">Egor Kuznetsov</span><span class="role">SA-RWFM</span></div>
+      <div class="author"><span class="name">Ogunwoye Faith Ouwatobi</span><span class="role">Data · Experiments</span></div>
+      <div class="author"><span class="name">Artem Asanov</span><span class="role">Simulation</span></div>
+      <div class="author"><span class="name">Makar Artemov</span><span class="role">Distillation</span></div>
       <div class="author"><span class="name">Ziang Guo</span><span class="role">Advising</span></div>
-      <div class="author"><span class="name">Dzmitry Tsetserukou</span><span class="role">Advising · PI</span></div>
+      <div class="author"><span class="name">Dzmitry Tsetserukou</span><span class="role">Principal Investigator</span></div>
     </div>
 
     <div class="affil-line">
