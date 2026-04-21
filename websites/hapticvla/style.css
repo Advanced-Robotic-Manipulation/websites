@@ -349,23 +349,14 @@ section.sec {
 .prose em { color: var(--fg); }
 .prose strong { color: var(--fg); font-weight: 600; }
 
-/* Abstract prose stretches the full column width. At wide widths we split
-   it into two columns so line length stays readable. */
+/* Abstract prose sits centered in the shell with breathing room on both
+   sides — wider than the default .prose measure but still single-column
+   so it reads easily. */
 #abstract .prose {
-  max-width: none;
+  max-width: 78ch;
+  margin-left: auto;
+  margin-right: auto;
   font-size: 1.05rem;
-}
-@media (min-width: 960px) {
-  #abstract .prose {
-    column-count: 2;
-    column-gap: 3rem;
-    column-rule: 1px solid var(--hair);
-  }
-  #abstract .prose p {
-    break-inside: avoid-column;
-    margin: 0 0 1.1em 0;
-  }
-  #abstract .prose p:first-child { margin-top: 0; }
 }
 
 /* ----------------------------------------------------------------------------
