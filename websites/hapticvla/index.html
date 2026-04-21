@@ -1,169 +1,493 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary-color:#2563eb;
-  --text-color:#1e293b;
-  --text-light:#64748b;
-  --background:#ffffff;
-  --surface:#f1f5f9;
-  --border:#e2e8f0;
-  --shadow:0 1px 3px 0 rgb(0 0 0 / 0.1);
-  --shadow-lg:0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:var(--background);
-  color:var(--text-color);
-}
-
-.container{
-  max-width:1000px;
-  margin:0 auto;
-  padding:0 20px;
-}
-
-.header{
-  background:linear-gradient(135deg,var(--surface) 0%, #ffffff 100%);
-  padding:70px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.header-content{text-align:center}
-
-.title{
-  font-size:clamp(2.5rem,5vw,3.5rem);
-  font-weight:700;
-  margin:0 0 20px 0;
-  background:linear-gradient(135deg,var(--primary-color),#7c3aed);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.subtitle{
-  font-size:1.25rem;
-  color:var(--text-light);
-  margin-bottom:30px;
-}
-
-.authors{
-  font-size:1.1rem;
-  margin:20px 0;
-  font-weight:500;
-}
-
-.contribution{
-  font-size:0.95rem;
-  margin-bottom:15px;
-  color:var(--text-light);
-  font-style:italic;
-}
-
-.institution{
-  font-size:1rem;
-  margin-bottom:40px;
-  color:var(--text-light);
-  font-weight:500;
-}
-
-.links{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.link-button{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:12px 26px;
-  background:var(--background);
-  border:2px solid var(--border);
-  border-radius:12px;
-  text-decoration:none;
-  color:var(--text-color);
-  font-weight:500;
-  transition:all .2s ease;
-  box-shadow:var(--shadow);
-}
-
-.link-button:hover{
-  border-color:var(--primary-color);
-  color:var(--primary-color);
-  transform:translateY(-2px);
-  box-shadow:var(--shadow-lg);
-}
-
-.link-button img{
-  width:20px;
-  height:20px;
-}
-
-@media(max-width:768px){
-  .links{
-    flex-direction:column;
-    align-items:center;
-  }
-  .link-button{
-    width:200px;
-    justify-content:center;
-  }
-}
-</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0a0a0b" />
+<title>HapticVLA — Contact-Rich Manipulation without Inference-Time Tactile Sensing</title>
+<meta name="description" content="HapticVLA: a Vision-Language-Action model that learns contact-rich manipulation with tactile feedback during training and deploys without any tactile hardware at inference. Preprint, 2026." />
+<meta property="og:title" content="HapticVLA — Contact-Rich Manipulation without Inference-Time Tactile Sensing" />
+<meta property="og:description" content="SA-RWFM teacher + Tactile Distillation. 86.7% mean success on three contact-rich tasks, without tactile sensors at inference." />
+<meta property="og:image" content="assets/method.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">
-<div class="container">
-<div class="header-content">
-
-<h1 class="title">HapticVLA: Contact-Rich Manipulation via Vision-Language-Action Model without Inference-Time Tactile Sensing</h1>
-
-<div class="authors">
-Konstantin Gubernatorov*, Mikhail Sannikov*, Ilya Mikhalchuk*, Egor Kuznetsov, Makar Artemov, Ogunwoye Faith Ouwatobi, Marcelino Fernando, Artem Asanov, Ziang Guo, and Dzmitry Tsetserukou
+<!-- Top bar ------------------------------------------------------------- -->
+<div class="topbar">
+  <div class="shell topbar-inner">
+    <div class="lab">
+      ARM<span class="dot">·</span>ISR Lab / Skoltech
+      &nbsp;&nbsp;<span class="crumb">HapticVLA</span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Method</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#results">Results</a>
+      <a href="#code">Code</a>
+      <a href="#cite">Cite</a>
+    </nav>
+  </div>
 </div>
 
-<div class="contribution">*Equal contribution</div>
+<!-- Hero ---------------------------------------------------------------- -->
+<header class="hero">
+  <div class="shell hero-grid">
 
-<div class="institution">Skolkovo Institute of Science and Technology</div>
+    <div class="hero-copy">
+      <div class="tag"><span class="blink"></span> Preprint · Under review · 2026</div>
 
-<div class="links">
+      <h1>Haptic<span class="ital">VLA</span></h1>
 
-<a href="#" class="link-button" target="_blank">
-<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
-Code
-</a>
+      <p class="tagline">
+        Contact-rich manipulation via a <em>Vision-Language-Action</em>
+        model&mdash;without inference-time tactile sensing.
+      </p>
 
-<a href="#" class="link-button" target="_blank">
-<img src="https://raw.githubusercontent.com/SelfAI-research/AnywhereVLA/main/.github/workflows/arxiv.svg" alt="arXiv">
-Paper
-</a>
+      <div class="authors-line">
+        <span class="a">Konstantin&nbsp;Gubernatorov</span><span class="star">*</span>,
+        <span class="a">Mikhail&nbsp;Sannikov</span><span class="star">*</span>,
+        <span class="a">Ilya&nbsp;Mikhalchuk</span><span class="star">*</span>,
+        <span class="a">Marcelino&nbsp;Fernando</span>,
+        <span class="a">Egor&nbsp;Kuznetsov</span>,
+        <span class="a">Ogunwoye&nbsp;Faith&nbsp;Ouwatobi</span>,
+        <span class="a">Artem&nbsp;Asanov</span>,
+        <span class="a">Makar&nbsp;Artemov</span>,
+        <span class="a">Ziang&nbsp;Guo</span>,
+        <span class="a">Dzmitry&nbsp;Tsetserukou</span>
+        <small><span class="star">*</span> Equal contribution · Intelligent Space Robotics Laboratory, Skoltech</small>
+      </div>
 
-<a href="#" class="link-button" target="_blank">
-<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace">
-Model
-</a>
+      <div class="hero-links">
+        <a class="hero-link" href="https://arxiv.org/abs/2603.15257" target="_blank" rel="noopener">
+          arXiv&nbsp;2603.15257 <span class="arrow">→</span>
+        </a>
+        <a class="hero-link" href="https://github.com/Advanced-Robotic-Manipulation/crab" target="_blank" rel="noopener">
+          Code <span class="arrow">→</span>
+        </a>
+        <a class="hero-link" href="https://huggingface.co/armteam" target="_blank" rel="noopener">
+          Models <span class="arrow">→</span>
+        </a>
+        <a class="hero-link" href="#results">
+          Video <span class="arrow">↓</span>
+        </a>
+      </div>
+    </div>
 
-<a href="#" class="link-button" target="_blank">
-<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace">
-Data
-</a>
+    <aside class="hero-viz" aria-label="Animated tactile heatmap">
+      <span class="viz-corner tl">10 × 10 tactile grid</span>
+      <span class="viz-corner tr">live</span>
+      <canvas id="haptic-grid"></canvas>
+      <span class="viz-corner bl">Σ 200 taxels · 120 Hz</span>
+      <span class="viz-corner br"><span class="dot"></span> simulated</span>
+    </aside>
 
-</div>
+  </div>
+</header>
 
-</div>
-</div>
-</div>
+<main>
 
+<!-- 01  Abstract -------------------------------------------------------- -->
+<section id="abstract" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">01</span>
+      <h2>Abstract</h2>
+      <span class="sec-sub">IROS submission · under review</span>
+    </div>
+
+    <div class="abstract-grid">
+      <div class="prose">
+        <p>
+          Tactile sensing is a crucial capability for Vision-Language-Action
+          architectures, as it enables dexterous and safe manipulation in
+          contact-rich tasks. However, reliance on dedicated tactile hardware
+          increases cost and reduces reproducibility across robotic platforms.
+        </p>
+        <p>
+          We argue that tactile-aware manipulation can be learned offline and
+          deployed without direct haptic feedback at inference. <strong>HapticVLA</strong>
+          proceeds in two tightly-coupled stages. <em>Safety-Aware Reward-Weighted
+          Flow Matching</em> (SA-RWFM) trains a flow-matching action expert on
+          precomputed tactile safety rewards that penalize excessive grasping
+          force and suboptimal trajectories. <em>Tactile Distillation</em> then
+          transfers this tactile-aware capability into a standard VLA by
+          distilling a compact tactile token from the SA-RWFM teacher and
+          training a student that predicts it from vision and proprioception
+          alone.
+        </p>
+        <p>
+          On real-world experiments, HapticVLA achieves a mean success rate of
+          <strong>86.7%</strong>, consistently outperforming baseline VLAs —
+          including versions provided with direct tactile feedback during
+          inference.
+        </p>
+      </div>
+
+      <aside class="pull-stat">
+        <div class="stat-num">86.7<span class="pct">%</span></div>
+        <div class="stat-label">
+          mean success<br>
+          3 contact-rich tasks<br>
+          20 trials each
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02  Method --------------------------------------------------------- -->
+<section id="method" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">02</span>
+      <h2><em>Method</em></h2>
+      <span class="sec-sub">SA-RWFM + Tactile Distillation</span>
+    </div>
+
+    <figure class="paper-figure">
+      <img src="assets/method.png" alt="HapticVLA method overview" loading="lazy">
+      <figcaption>
+        Overview. Offline tactile reward computation feeds SA-RWFM teacher
+        training alongside language, vision and state. At deployment,
+        Tactile Distillation removes the tactile modality — the student
+        predicts tactile representations from vision and proprioception alone.
+      </figcaption>
+    </figure>
+
+    <div class="stages">
+      <div class="stage">
+        <span class="stage-num">Stage&nbsp;A</span>
+        <h3>Offline tactile reward</h3>
+        <p>
+          For every episode we summarize left/right tactile maps into per-step
+          safety rewards over force band, peak pressure, pressure concentration,
+          inter-pad asymmetry, and slip detection, then combine with episode
+          outcomes (success, drop, damage, risk).
+        </p>
+      </div>
+
+      <div class="stage">
+        <span class="stage-num">Stage&nbsp;B</span>
+        <h3>SA-RWFM teacher</h3>
+        <p>
+          A tactile-aware SmolVLA action expert is fine-tuned with reward-weighted
+          flow matching — exponentiated clipped weights on a mixed episode /
+          chunk advantage, robustly normalized per task, with an L2 anchor to
+          the IL initialization.
+        </p>
+      </div>
+
+      <div class="stage">
+        <span class="stage-num">Stage&nbsp;C</span>
+        <h3>Tactile distillation</h3>
+        <p>
+          Teacher rollouts are precomputed once over the dataset. A tactile-free
+          student is initialized from the teacher backbone (tactile encoder
+          dropped, state projection sliced to proprioception) and trained on a
+          50/50 blend of ground-truth and teacher action chunks.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03  Hardware ------------------------------------------------------- -->
+<section id="hardware" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">03</span>
+      <h2>Hardware</h2>
+      <span class="sec-sub">Crab platform · bimanual SO-101</span>
+    </div>
+
+    <div class="hw-grid">
+      <div class="hw-photo">
+        <img src="assets/robot.png" alt="Crab robotics platform" loading="lazy">
+      </div>
+
+      <table class="specs">
+        <tr>
+          <td>Arms</td>
+          <td>
+            2 × LeRobot SO-101 (6&nbsp;DoF each).
+            <em>Left 7.4&nbsp;V · right 12&nbsp;V for added torque.</em>
+          </td>
+        </tr>
+        <tr>
+          <td>Gripper</td>
+          <td>
+            Custom parallel gripper, based on the open-source
+            <a href="https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper" target="_blank" rel="noopener">SO-ARM100/101 design</a>,
+            instrumented with tactile arrays.
+          </td>
+        </tr>
+        <tr>
+          <td>Tactile</td>
+          <td>
+            2 × 10×10 taxels → <strong>200 taxels @ 120&nbsp;Hz</strong>,
+            1–9&nbsp;N per taxel.
+          </td>
+        </tr>
+        <tr>
+          <td>Cameras</td>
+          <td>
+            Intel RealSense D435 (overhead) + 2 × IMX335 5&nbsp;MP wrist.
+            <em>All streams 640 × 480 @ 15&nbsp;FPS.</em>
+          </td>
+        </tr>
+        <tr>
+          <td>Compute</td>
+          <td>
+            <strong>Inference</strong>: Jetson Orin NX 16&nbsp;GB.
+            <em>Training: RTX 4090 (SA-RWFM) · H100 (distillation).</em>
+          </td>
+        </tr>
+        <tr>
+          <td>Tasks</td>
+          <td>
+            Pick-and-place — marmalade jar · waffles · egg carton.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="hw-detail">
+      <figure>
+        <img src="assets/tactile_sensor.jpg" alt="Tactile array" loading="lazy">
+        <figcaption>100-taxel array per fingertip · 10 × 10</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/tactile_map.png" alt="Example tactile map during manipulation" loading="lazy">
+        <figcaption>Tactile map during grasp · red = high force</figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- 04  Results ------------------------------------------------------- -->
+<section id="results" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">04</span>
+      <h2><em>Results</em></h2>
+      <span class="sec-sub">Real-world rollouts · unedited footage</span>
+    </div>
+
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/rYLjZGsskqs?rel=0&modestbranding=1"
+        title="HapticVLA — Real-world rollouts"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+    <div class="video-caption">Jar · Waffles · Egg — HapticVLA vs. baselines</div>
+
+  </div>
+</section>
+
+<!-- 05  Ablation ------------------------------------------------------ -->
+<section id="ablation" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">05</span>
+      <h2>Ablation — Tactile Distillation</h2>
+      <span class="sec-sub">n = 20 trials · per task</span>
+    </div>
+
+    <table class="ablation">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Jar</th>
+          <th>Waffles</th>
+          <th>Egg</th>
+          <th>Mean&nbsp;↑</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>w/o TD, async</td>
+          <td>16 / 20</td><td>18 / 20</td><td>15 / 20</td>
+          <td>81.7%</td>
+        </tr>
+        <tr>
+          <td>w/o TD</td>
+          <td>11 / 20</td><td>17 / 20</td><td>17 / 20</td>
+          <td>75.0%</td>
+        </tr>
+        <tr>
+          <td>w/ TD, async</td>
+          <td>14 / 20</td><td>19 / 20</td><td>15 / 20</td>
+          <td>80.0%</td>
+        </tr>
+        <tr class="best">
+          <td>w/ TD <span class="chip">Ours</span></td>
+          <td>15 / 20</td><td>18 / 20</td><td>19 / 20</td>
+          <td><strong>86.7%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="ablation-note">
+      TD substantially improves contact-rich manipulation performance; combined
+      with SA-RWFM it yields the largest mean success rate. Synchronous chunking
+      consistently outperforms async, which we attribute to temporal misalignment
+      between tactile observations and control actions under async inference.
+    </p>
+
+  </div>
+</section>
+
+<!-- 06  Code & Weights ------------------------------------------------- -->
+<section id="code" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">06</span>
+      <h2>Code &amp; Weights</h2>
+      <span class="sec-sub">open · Apache-2.0</span>
+    </div>
+
+    <div class="cards">
+
+      <a class="card" href="https://github.com/Advanced-Robotic-Manipulation/crab" target="_blank" rel="noopener">
+        <div class="card-label">GitHub</div>
+        <div class="card-title">Advanced-Robotic-Manipulation/crab</div>
+        <div class="card-hint">LeRobot fork with SA-RWFM + tactile distillation pipeline.</div>
+      </a>
+
+      <a class="card" href="https://arxiv.org/abs/2603.15257" target="_blank" rel="noopener">
+        <div class="card-label">Preprint</div>
+        <div class="card-title">arXiv&nbsp;2603.15257</div>
+        <div class="card-hint">PDF · under review.</div>
+      </a>
+
+      <div class="card">
+        <div class="card-label">Hugging Face · armteam</div>
+        <ul>
+          <li>
+            <a href="https://huggingface.co/armteam/crab-smolvla-hapticsvla" target="_blank" rel="noopener">crab-smolvla-hapticsvla</a>
+            <em>student · deployable</em>
+          </li>
+          <li>
+            <a href="https://huggingface.co/armteam/crab-smolvla-rwfm" target="_blank" rel="noopener">crab-smolvla-rwfm</a>
+            <em>SA-RWFM teacher</em>
+          </li>
+          <li>
+            <a href="https://huggingface.co/armteam/crab-smolvla-right-arm" target="_blank" rel="noopener">crab-smolvla-right-arm</a>
+            <em>IL baseline</em>
+          </li>
+          <li>
+            <a href="https://huggingface.co/armteam/crab-smolvla-left-arm" target="_blank" rel="noopener">crab-smolvla-left-arm</a>
+            <em>IL baseline</em>
+          </li>
+        </ul>
+      </div>
+
+      <a class="card" href="https://github.com/Advanced-Robotic-Manipulation/crab/blob/paper-release/docs/paper/REPRODUCING.md" target="_blank" rel="noopener">
+        <div class="card-label">Reproducing</div>
+        <div class="card-title">Step-by-step guide</div>
+        <div class="card-hint">Data → SA-RWFM teacher → distillation → Jetson deploy.</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- 07  Citation ------------------------------------------------------ -->
+<section id="cite" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">07</span>
+      <h2>Citation</h2>
+      <span class="sec-sub">preprint · cite the arXiv version</span>
+    </div>
+
+    <div class="bibtex">
+      <button class="copy" aria-label="Copy BibTeX">copy</button>
+<pre><code>@misc{hapticvla2026,
+  title         = {HapticVLA: Contact-Rich Manipulation via Vision-Language-Action
+                   Model without Inference-Time Tactile Sensing},
+  author        = {Gubernatorov, Konstantin and Sannikov, Mikhail and
+                   Mikhalchuk, Ilya and Fernando, Marcelino and Kuznetsov, Egor
+                   and Ogunwoye, Faith Ouwatobi and Asanov, Artem and
+                   Artemov, Makar and Guo, Ziang and Tsetserukou, Dzmitry},
+  year          = {2026},
+  eprint        = {2603.15257},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO},
+  url           = {https://arxiv.org/abs/2603.15257}
+}</code></pre>
+    </div>
+
+  </div>
+</section>
+
+<!-- 08  Authors ------------------------------------------------------- -->
+<section id="authors" class="sec">
+  <div class="shell">
+
+    <div class="sec-head">
+      <span class="n">08</span>
+      <h2>Authors</h2>
+      <span class="sec-sub">Intelligent Space Robotics Laboratory · Skoltech</span>
+    </div>
+
+    <div class="author-list">
+      <div class="author"><span class="name">Konstantin Gubernatorov<span class="star">*</span></span><span class="role">Method · Training</span></div>
+      <div class="author"><span class="name">Mikhail Sannikov<span class="star">*</span></span><span class="role">SA-RWFM · Distillation</span></div>
+      <div class="author"><span class="name">Ilya Mikhalchuk<span class="star">*</span></span><span class="role">Platform · Inference</span></div>
+      <div class="author"><span class="name">Marcelino Fernando</span><span class="role">Experiments</span></div>
+      <div class="author"><span class="name">Egor Kuznetsov</span><span class="role">Data</span></div>
+      <div class="author"><span class="name">Ogunwoye Faith Ouwatobi</span><span class="role">Data</span></div>
+      <div class="author"><span class="name">Artem Asanov</span><span class="role">Hardware</span></div>
+      <div class="author"><span class="name">Makar Artemov</span><span class="role">Hardware</span></div>
+      <div class="author"><span class="name">Ziang Guo</span><span class="role">Advising</span></div>
+      <div class="author"><span class="name">Dzmitry Tsetserukou</span><span class="role">Advising · PI</span></div>
+    </div>
+
+    <div class="affil-line">
+      <span class="star">*</span> Equal contribution
+      <span class="dot">·</span>
+      Intelligent Space Robotics Laboratory
+      <span class="dot">·</span>
+      Skolkovo Institute of Science and Technology, Moscow
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- Footer ------------------------------------------------------------- -->
+<footer class="footer">
+  <div class="shell inner">
+    <span>© 2026 Intelligent Space Robotics Laboratory — Skoltech</span>
+    <span>
+      HapticVLA project site ·
+      <a href="https://github.com/Advanced-Robotic-Manipulation/websites/tree/main/websites/hapticvla" target="_blank" rel="noopener">source</a>
+    </span>
+  </div>
+</footer>
+
+<script src="haptic-grid.js" defer></script>
 </body>
 </html>
