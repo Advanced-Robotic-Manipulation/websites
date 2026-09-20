@@ -1,0 +1,10 @@
+{
+  "name": "hapticwam-technical-report",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173 --bind 0.0.0.0",
+    "check": "node scripts/verify.mjs"
+  }
+}

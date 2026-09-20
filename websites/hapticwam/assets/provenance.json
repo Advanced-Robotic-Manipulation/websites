@@ -1,0 +1,83 @@
+{
+  "resultRevision": "34d04a1f6f6ee91910e68cdf7ca44de998ff31ad",
+  "rigRevision": "fedce3c41d122b9f2cba6584e7aecce68a365a23",
+  "episodes": [
+    {
+      "task": "waffles",
+      "episode": "ep_student_waffles_1789500023_000",
+      "duration": 40.69577729800949,
+      "fps": 15,
+      "model": "Student \u00b7 stu_simft_001000",
+      "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_waffles_1789500023_000/meta.json",
+      "video": "assets/waffles.mp4",
+      "poster": "assets/waffles-poster.webp",
+      "outcome": "Placed (operator verdict)",
+      "seed": 101
+    },
+    {
+      "task": "carton",
+      "episode": "ep_student_Carton_1789499088_000",
+      "duration": 39.69370323797921,
+      "fps": 15,
+      "model": "Student \u00b7 stu_simft_001000",
+      "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_Carton_1789499088_000/meta.json",
+      "video": "assets/carton.mp4",
+      "poster": "assets/carton-poster.webp",
+      "outcome": "Placed (operator verdict)",
+      "seed": 101
+    },
+    {
+      "task": "egg",
+      "episode": "ep_student_egg_1789511366_000",
+      "duration": 39.96165664802538,
+      "fps": 15,
+      "model": "Student \u00b7 stu_simft_001000",
+      "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_egg_1789511366_000/meta.json",
+      "video": "assets/egg.mp4",
+      "poster": "assets/egg-poster.webp",
+      "outcome": "Placed (operator verdict)",
+      "seed": 101
+    }
+  ],
+  "predictions": [
+    {
+      "task": "waffles",
+      "episode": "ep_teacher_waffles_1789501060_001",
+      "checkpoint": "runs/teacher_v6_simft/teacher_002000.pt",
+      "source": "https://huggingface.co/datasets/armteam/hapticwam-results/resolve/34d04a1f6f6ee91910e68cdf7ca44de998ff31ad/repo_docs_results/rig_0916/wm_sensor_pred/wm_sensor_pred_waffles_cell2_preclose_arrays.npz",
+      "route": "B offline teacher re-run (no planner_cpk.npz in the take)"
+    },
+    {
+      "task": "carton",
+      "episode": "ep_teacher_Carton_1789502023_001",
+      "checkpoint": "runs/teacher_v6_simft/teacher_002000.pt",
+      "source": "https://huggingface.co/datasets/armteam/hapticwam-results/resolve/34d04a1f6f6ee91910e68cdf7ca44de998ff31ad/repo_docs_results/rig_0916/wm_sensor_pred/wm_sensor_pred_carton_001_arrays.npz",
+      "route": "B offline teacher re-run (no planner_cpk.npz in the take)"
+    }
+  ],
+  "license": "Research archive media: CC BY 4.0; see linked dataset cards.",
+  "files": {
+    "architecture.webp": "871e60db6479944bc419ecb6d2e18a3dbcb3adca11308cebc5b860e1a5af0748",
+    "carton-contact-0.webp": "25e5fc4eec03067a574b5ad9d0bf549218afb79af3900561e37b8222bdee896b",
+    "carton-contact-1.webp": "7fd66a539ea122221a2a793071b8eb9c5c3cefa2c70a8a0e8695b1cd851f02d0",
+    "carton-contact-2.webp": "997344e2d956d24688c68741ecff4cd5439a5e4e1a557fee489a716088f78458",
+    "carton-contact-3.webp": "374359ef9bc77cb740a56b043a9af29b6fbb2be91cfe1aed97f8bb9a89b56887",
+    "carton-poster.webp": "9eec5e9d0bae30b44e96e2b976f4da081b3a261c0b67e49c4c68727ee6f63a8a",
+    "carton.mp4": "05bd8d4050a76f89aa6cf4cbc82c5534c41672a520cba963d9b1d8787cfac3f5",
+    "egg-poster.webp": "3e429b24a97690870da4c21c753ea3becf692a2c8abcccd28225c2280bf908f3",
+    "egg.mp4": "d535eda870d804c7283b6927ae207d802c3d7dc99014a5c564bc192a9f5633fa",
+    "episodes.json": "6d39b482561e68143eb08b8736c7037858ff83ebc003a7d6343b094ebaab4f6e",
+    "hapticwam.pdf": "19fe7b620e7b5663a0b4b9d8aa058ac1914b5c4943e2780f47a1c4952b4ce2c1",
+    "per_take_egg.csv": "7a9b37ae51caa792bda4ddadbb9e52098ad658a5ffc999a2633183b169e1693f",
+    "per_take_final.csv": "ac552d65d9c9ccade525be0579ddc7667c40172d609ef7e45f9382eb61653d17",
+    "predictions.json": "cddf413ba54b4e171356d88ce92898dc9737cc38fee7d4651a56e93989aa985d",
+    "results.csv": "9c129690341ff5204a9a75cd90e13ded40f82985569604ed5d5508e7d3a1552c",
+    "setup.webp": "ea3ae2093eaace81ef7b9b45bcfdafde5910ed020afec3135e84b7a72b7f20c5",
+    "waffles-contact-0.webp": "75d886c987eb70269bf0b4f4a5f89dc90b1f765590a31f259704011432d031ef",
+    "waffles-contact-1.webp": "544a7ffa5060bd17e360e8e19964ee980ec66f6d7dd716f0335839c78c51f72c",
+    "waffles-contact-2.webp": "7dd30bb7c96a335bd6cee9045d6203ff21d8084e4472885f95f1d5a1a75c7d50",
+    "waffles-contact-3.webp": "2d89dc3b3e28e2b2ea7344e6d3a933e8d9b1f7b82080ed5208897a2e73f9a150",
+    "waffles-poster.webp": "99bb77f276a4bc94f5e1a7ae0beb51d811907ecc9df5460e090647caff0820e1",
+    "waffles.mp4": "58a54d4bbae5a3bfe18f67e295f7605bea71234bcbab026b6648bf05f3151a03"
+  }
+}

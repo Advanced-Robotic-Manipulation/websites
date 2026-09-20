@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="HapticWAM: a technical report on structured contact prediction and haptic-imagination distillation for robotic manipulation. Interactive figures, recorded robot trials, and experimental results.">
+  <title>HapticWAM — Imagined touch for robotic manipulation</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%2327695f'/%3E%3Cpath d='M18 15v34m28-34v34M18 32h28' stroke='%23f7f6f2' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#overview">Skip to report</a>
+  <header class="site-header">
+    <a class="wordmark" href="#top">HapticWAM<span class="wordmark-dot">.</span></a>
+    <nav aria-label="Report sections">
+      <a href="#overview">Overview</a><a href="#method">Method</a><a href="#contact">Contact</a><a href="#experiments">Experiments</a><a href="#resources">Resources</a>
+    </nav>
+    <a class="header-paper" href="assets/hapticwam.pdf">Paper <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <div class="hero reading">
+      <h1>HapticWAM<span>Distilling imagined touch<br class="desktop-break"> into a world–action model</span></h1>
+      <p class="standfirst">Learning to predict contact, then transferring that knowledge to a policy without fingertip observations.</p>
+      <p class="authors">Mikhail Sannikov<sup>*</sup>, Ilya Mikhalchuk<sup>*</sup>, Konstantin Gubernatorov<sup>*</sup>,<br class="desktop-break"> Petr Kovalev, Ogunwoye Faith Oluwatobi, Dzmitry Tsetserukou</p>
+      <p class="affiliation">Intelligent Space Robotics Laboratory · Skoltech <span>* Equal contribution</span></p>
+      <div class="resource-links" aria-label="Research materials">
+        <a href="assets/hapticwam.pdf">Read the paper <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/Advanced-Robotic-Manipulation/phantom">Code <span aria-hidden="true">↗</span></a>
+        <a href="https://huggingface.co/datasets/armteam/hapticwam-teleop-dataset">Dataset <span aria-hidden="true">↗</span></a>
+        <a href="https://huggingface.co/armteam/hapticwam-student">Models <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <figure class="wide opening-figure">
+      <div class="video-grid">
+        <div class="video-item"><video id="video-waffles" controls playsinline muted preload="none" poster="assets/waffles-poster.webp" aria-label="Recorded student trial: waffle pick and place"><source src="assets/waffles.mp4" type="video/mp4"></video><div class="video-label"><span>01 / Waffles</span><span>Student · 1×</span></div></div>
+        <div class="video-item"><video id="video-carton" controls playsinline muted preload="none" poster="assets/carton-poster.webp" aria-label="Recorded student trial: carton pick and place"><source src="assets/carton.mp4" type="video/mp4"></video><div class="video-label"><span>02 / Carton</span><span>Student · 1×</span></div></div>
+        <div class="video-item"><video id="video-egg" controls playsinline muted preload="none" poster="assets/egg-poster.webp" aria-label="Recorded student trial: egg pick and place"><source src="assets/egg.mp4" type="video/mp4"></video><div class="video-label"><span>03 / Egg</span><span>Student · 1×</span></div></div>
+      </div>
+      <figcaption><span class="figure-number">Figure 1</span> Three recorded student trials, one per task, at real-time speed. Each is seed 101 and has an operator verdict of successful placement. These examples illustrate behavior; aggregate results appear below. <a href="assets/episodes.json">Episode records ↗</a></figcaption>
+    </figure>
+
+    <section id="overview" class="report-section">
+      <div class="reading">
+        <div class="section-marker">01 / Overview</div>
+        <h2>Contact is more than appearance.</h2>
+        <p>A scene image can show a gripper surrounding an object without resolving whether the grasp is stable, slipping, or applying excessive force. Optical tactile sensors expose local deformation and contact mechanics, but directly conditioning a policy on these measurements ties its inputs to the fingertips.</p>
+        <p>We introduce <strong>HapticWAM</strong>, a world–action model that jointly generates actions and a structured description of future contact. A tactile-conditioned teacher learns from gel images, mechanical fields, and contact state. Haptic-Imagination Distillation transfers its contact futures and action predictions to a student that retains contact generation while removing the fingertip input branches.</p>
+        <p>The central question is whether contact can remain a useful internal representation when it is no longer directly observed by the policy.</p>
+        <aside class="scope-note"><strong>Model inputs and execution are distinct.</strong> The student receives scene RGB, robot state, and an arm-side wrench estimate. The reported robot experiments still use a shared tactile-assisted execution controller. “Without fingertip observations” describes the student model, not a sensor-free robot system.</aside>
+      </div>
+      <figure class="wide setup-figure">
+        <img src="assets/setup.webp" alt="UR3 robot with a Robotiq 2F-85 gripper, paired DM-Tac W2L tactile fingertips, RealSense camera, and Echo teleoperation setup" loading="lazy" width="1200" height="620">
+        <figcaption><span class="figure-number">Figure 2</span> The physical setup. A UR3 manipulator carries two optical tactile fingertips. Scene images, robot state, and fingertip streams are recorded together.</figcaption>
+      </figure>
+    </section>
+
+    <section id="method" class="report-section">
+      <div class="reading">
+        <div class="section-marker">02 / Method</div>
+        <h2>Predicting touch alongside action.</h2>
+        <p>A frozen Cosmos-Predict2.5-2B video backbone processes observation, video, contact, and action groups in one latent sequence. LoRA adapters and newly introduced modules learn the manipulation task. At each replan, the model jointly denoises future video, a contact package, and an action chunk.</p>
+        <p>The contact package represents <em>events and mechanics</em>: no contact, onset, hold, slip, or release; changes in displacement and normal-force fields; contact masks, centers of pressure, slip scores, and wrenches. It does not merely reconstruct the appearance of a tactile image.</p>
+      </div>
+
+      <figure class="wide method-figure">
+        <div class="figure-toolbar"><span class="figure-title">Observation → joint generation</span><div class="segmented" role="group" aria-label="Architecture configuration"><button data-model="teacher" aria-pressed="false">Teacher</button><button data-model="student" aria-pressed="true">Student</button></div></div>
+        <div class="architecture" id="architecture">
+          <div class="architecture-inputs"><span class="diagram-label">Conditioning</span><div class="input-node">Scene image <i>I<sub>t</sub></i></div><div class="input-node">Robot state + arm wrench</div><div class="input-node">Task text + previous action</div><div id="tactile-node" class="input-node tactile-node omitted">Fingertip observations <span>Not an input to the student</span></div></div>
+          <div class="diagram-connector" aria-hidden="true">→</div>
+          <div class="backbone"><span class="diagram-label">World–action model</span><h3>Frozen video backbone</h3><p>Cosmos-Predict2.5-2B<br>+ LoRA + learned modules</p><div class="acc-node">Anticipatory Contact Coupling<span>Previous imagined contact → attention</span></div></div>
+          <div class="diagram-connector" aria-hidden="true">→</div>
+          <div class="architecture-outputs"><span class="diagram-label">Jointly generated</span><div class="output-node">Video futures <span>3 s horizon</span></div><div class="output-node contact-node">Contact package <span>+1, +2, +3 s</span></div><div class="output-node">Action chunk <span>16 steps · 1.6 s</span></div></div>
+        </div>
+        <div id="architecture-note" class="diagram-note" aria-live="polite">Student · 12 latent frames · anticipatory branch only · 26.4 M trainable parameters</div>
+        <figcaption><span class="figure-number">Figure 3</span> Switch between teacher and student inputs. Both generate contact futures. This is a simplified data-flow diagram; the full attention structure is specified in the paper.</figcaption>
+      </figure>
+
+      <div class="reading">
+        <h3>Anticipatory Contact Coupling</h3>
+        <p>ACC combines current observations with contact imagined at the previous replan, using this summary to bias attention on haptic keys. The teacher also has a reactive branch driven by observed tactile change. The student uses the anticipatory branch alone. At deployment, the prior contact package is generated by the model, rather than supplied by future measurements.</p>
+        <h3>Transferring contact knowledge</h3>
+        <p>Haptic-Imagination Distillation matches the teacher’s contact futures, event distributions, and action velocities. Event saliency and predicted uncertainty weight contact-future matching. The student inherits teacher weights and is distilled on demonstrations and mixed policy rollouts, including unsuccessful rollouts with no ground-truth action weight.</p>
+        <details><summary>Training configuration and physical horizons</summary><div class="details-body"><p>The teacher has 27.9 M trainable parameters and receives 20,000 demonstration updates followed by 2,000 simulation/rollout updates. The deployed student receives 1,000 distillation updates.</p><p>Each training clip contains one current RGB frame and 12 future targets at 4 Hz. Contact targets are at 1, 2, and 3 seconds; action targets are at 0.1–1.6 seconds at 10 Hz. Future targets are not observed history.</p><a href="assets/architecture.webp">Full architecture figure ↗</a></div></details>
+      </div>
+    </section>
+
+    <section id="contact" class="report-section">
+      <div class="reading">
+        <div class="section-marker">03 / Inspect a prediction</div>
+        <h2>A contact future, made visible.</h2>
+        <p>Inspect a fixed prediction from an archived offline teacher rerun. Choose an episode, fingertip, and prediction horizon to compare a generated contact field with its recorded target. The camera frames provide physical context for the same anchor and future times.</p>
+        <p>These examples reveal the representation and its errors. They are not a held-out accuracy benchmark or recordings of the student’s online predictions.</p>
+      </div>
+      <figure class="wide explorer" id="explorer">
+        <div class="figure-toolbar"><span class="figure-title">Contact prediction explorer</span><div class="segmented" role="group" aria-label="Contact episode"><button data-contact-task="waffles" aria-pressed="true">Waffles</button><button data-contact-task="carton" aria-pressed="false">Carton</button></div></div>
+        <div id="explorer-status" role="status">Loading archived contact fields…</div>
+        <div class="explorer-body" hidden>
+          <div class="camera-pair"><figure><img id="anchor-frame" alt="Recorded camera image at the prediction anchor" width="640" height="480" loading="lazy"><figcaption>Observed scene <span>t = 0</span></figcaption></figure><figure><img id="future-frame" alt="Recorded camera image at the selected future horizon" width="640" height="480" loading="lazy"><figcaption>Recorded future <span id="future-time">t = +1 s</span></figcaption></figure></div>
+          <div class="contact-fields">
+            <div class="field-controls"><label>Representation <select id="contact-channel"><option value="mask">Contact mask</option><option value="d_fz">Normal-force change</option></select></label><label>Fingertip <select id="contact-finger"><option value="0">Left</option><option value="1">Right</option></select></label></div>
+            <div class="heatmap-pair"><figure><canvas id="pred-field" width="384" height="288" role="img" aria-label="Predicted contact field"></canvas><figcaption><span class="legend-dot predicted"></span>Predicted</figcaption></figure><figure><canvas id="obs-field" width="384" height="288" role="img" aria-label="Recorded contact field"></canvas><figcaption><span class="legend-dot measured"></span>Recorded target</figcaption></figure></div>
+            <div class="color-scale"><span id="scale-min">0</span><canvas id="field-scale" width="220" height="10" aria-label="Shared contact field color scale"></canvas><span id="scale-max">1</span></div><p id="field-unit" class="microcopy">Mask value · shared color scale</p>
+          </div>
+        </div>
+        <div class="explorer-timeline"><label for="contact-horizon">Prediction horizon</label><input id="contact-horizon" type="range" min="1" max="3" value="1" step="1" disabled><output for="contact-horizon" id="horizon-value">+1 s</output><div class="horizon-ticks"><span>+1 s</span><span>+2 s</span><span>+3 s</span></div></div>
+        <div class="prediction-readout" aria-live="polite"><span id="pred-event"></span><span id="obs-event"></span><a id="prediction-source" href="https://huggingface.co/datasets/armteam/hapticwam-results">Source arrays ↗</a></div>
+        <figcaption><span class="figure-number">Figure 4</span> Offline teacher rerun, EMA weights, one flow evaluation, sampling seed 0. Horizon selection reveals an existing prediction; it does not rerun a model. Force-change fields use native sensor units, not calibrated newtons. <span id="prediction-context"></span></figcaption>
+      </figure>
+    </section>
+
+    <section id="experiments" class="report-section">
+      <div class="reading">
+        <div class="section-marker">04 / Physical evaluation</div>
+        <h2>Three tasks. Two hundred trials.</h2>
+        <p>We evaluate the deployed teacher, distilled student, π<sub>0.5</sub>, and Diffusion Policy on waffle, carton, and egg pick-and-place. Each model is tested on 20 waffle, 20 carton, and 10 egg starts. Starting positions are shared across models; success is an operator-reviewed placement at the target.</p>
+        <p>The student achieves the highest observed placement rate on each task: <strong>19/20 on waffles, 17/20 on cartons, and 5/10 on eggs.</strong> Across tasks, this is 41/50 placements (82% pooled), or 76.7% when each task is weighted equally.</p>
+      </div>
+      <figure class="wide results-figure">
+        <div class="figure-toolbar"><span class="figure-title">Placement success</span><div class="segmented" role="group" aria-label="Results task"><button data-result-task="waffles" aria-pressed="true">Waffles</button><button data-result-task="carton" aria-pressed="false">Carton</button><button data-result-task="egg" aria-pressed="false">Egg</button><button data-result-task="pooled" aria-pressed="false">Pooled</button></div></div>
+        <div class="results-layout"><div class="chart-wrap"><svg id="success-chart" viewBox="0 0 720 310" role="img" aria-label="Placement rates with descriptive 95 percent Wilson intervals"></svg></div><aside class="result-context"><span id="result-task-name" class="diagram-label">Waffles</span><div class="result-count" id="result-count">19<span>/20</span></div><p id="result-description">Student placements</p><p id="result-interval">95% Wilson interval: 76.4–99.1%</p><a id="watch-task" href="#video-waffles">Watch the example trial ↑</a></aside></div>
+        <figcaption><span class="figure-number">Figure 5</span> Points show placement rates; lines show descriptive 95% Wilson intervals. Counts are operator verdicts from the main comparison. Intervals describe binomial uncertainty, not variation across training seeds.</figcaption>
+        <details><summary>Exact counts and downloadable results</summary><div class="table-scroll"><table><caption>Successful placements / evaluated starts</caption><thead><tr><th scope="col">Model</th><th scope="col">Waffles</th><th scope="col">Carton</th><th scope="col">Egg</th><th scope="col">Pooled</th></tr></thead><tbody><tr><th scope="row">Teacher</th><td>14/20</td><td>12/20</td><td>4/10</td><td>30/50</td></tr><tr><th scope="row">Student</th><td>19/20</td><td>17/20</td><td>5/10</td><td>41/50</td></tr><tr><th scope="row">π<sub>0.5</sub></th><td>4/20</td><td>6/20</td><td>0/10</td><td>10/50</td></tr><tr><th scope="row">Diffusion Policy</th><td>2/20</td><td>3/20</td><td>4/10</td><td>9/50</td></tr></tbody></table></div><p><a href="assets/results.csv" download>Download summary CSV ↓</a></p></details>
+      </figure>
+      <div class="reading"><p>These are comparisons of complete deployed configurations. Training data, candidate selection, gripper timing, and replan limits differ. The student–teacher gap is not separable at this sample size, and the comparison does not isolate a distillation effect. Egg handling remains difficult: its 5/10 student result has a wide 23.7–76.3% Wilson interval.</p><details><summary>Evaluation protocol and baseline configuration</summary><div class="details-body"><p>Starts use seeds 101–120 for waffles and cartons and 101–110 for eggs. Model order alternates between launches. The operator is not blinded; the reported teacher–student pair was selected after its carton result was observed.</p><p>The baseline export contains 876 episodes and excludes deliberate failures; baselines receive no simulation episodes or policy rollouts. Diffusion Policy’s deployment history is 0.486 s apart, compared with 0.1 s during training.</p><p>The teacher uses compiled kernels and the student does not. Median replan times are 0.445 s (teacher), 0.636 s (student), 0.127 s (π<sub>0.5</sub>), and 0.389 s (Diffusion Policy). These figures do not establish a student speed advantage.</p></div></details></div>
+    </section>
+
+    <section id="ablation" class="report-section">
+      <div class="reading"><div class="section-marker">05 / Contact intervention</div><h2>What changes when imagined contact is clamped?</h2><p>We keep the deployed student checkpoint fixed and replace the generated contact frames with zeros throughout sampling. Thirty additional robot trials are compared with the intact student’s previously recorded outcomes on the same first ten starts per task.</p><p>Successful placements fall from <strong>21/30 to 4/30</strong>, a decrease of 56.7 percentage points. The largest task-level change occurs on waffles.</p></div>
+      <figure class="wide ablation-figure"><div class="figure-toolbar"><span class="figure-title">Fixed checkpoint · matched start seeds</span><div class="chart-legend"><span><i class="legend-dot predicted"></i>Intact student</span><span><i class="legend-dot measured"></i>Zero contact</span></div></div><svg id="ablation-chart" viewBox="0 0 960 245" role="img" aria-label="Intact versus zero contact: waffles 9 versus 1, carton 7 versus 3, egg 5 versus 0, each out of 10"></svg><figcaption><span class="figure-number">Figure 6</span> Placement counts out of ten per task. The intervention changes the generated representation; contact-dependent selection and closing rules can also mediate the result.</figcaption></figure>
+      <div class="reading"><p>This supports deployment-time dependence on the contact-generation pathway in the evaluated system. It does not isolate ACC’s attention bias, establish contact-prediction accuracy, or compare contact distillation with action-only training. Intact trials precede intervention trials, so session-order effects remain possible.</p><details><summary>Offline intervention results</summary><div class="details-body"><p>On 124 held-out validation windows, zeroing generated contact raises the student’s endpoint error from 22.31 mm to 28.31 mm, the no-motion floor. Zeroing only the ACC input leaves it at 22.35 mm. These interventions act on different parts of the system.</p></div></details></div>
+    </section>
+
+    <section id="forces" class="report-section">
+      <div class="reading"><div class="section-marker">06 / Contact mechanics</div><h2>Placement and force are different outcomes.</h2><p>We report pinch force separately from placement. The student has lower mean force than the teacher on waffles and eggs, and a similar mean on cartons. These summaries are conditional on sensor-defined placements, whose counts can differ from operator verdicts.</p></div>
+      <figure class="wide force-figure"><div class="figure-toolbar"><span class="figure-title">Pinch force at sensor-defined placements</span><div class="segmented" role="group" aria-label="Force task"><button data-force-task="waffles" aria-pressed="true">Waffles</button><button data-force-task="carton" aria-pressed="false">Carton</button><button data-force-task="egg" aria-pressed="false">Egg</button></div></div><svg id="force-chart" viewBox="0 0 960 310" role="img" aria-label="Mean pinch force and reported standard deviations in newtons"></svg><figcaption><span class="figure-number">Figure 7</span> Points show means; lines show reported standard deviations, not confidence intervals. Samples are shown explicitly. The one- and two-sample Diffusion Policy entries report only a mean. Missing observations are not plotted as zero.</figcaption></figure>
+      <div class="reading"><p>The 24.8 N reference used for waffle/carton analysis is derived from those observations; it is not a calibrated safety limit for eggs. Two egg cracks were recorded for Diffusion Policy and none for the other models. Conditional force summaries and limited event coverage do not establish damage-free control.</p></div>
+    </section>
+
+    <section id="limits" class="report-section"><div class="reading"><div class="section-marker">07 / Discussion</div><h2>What the evidence establishes.</h2><p>HapticWAM provides a way to transfer structured contact generation into a policy that does not consume fingertip observations. The evaluated student has the highest observed placement counts, and clamping its contact generation changes closed-loop outcomes substantially.</p><p>The experiments are exploratory, use single training runs, and cover three tasks on one platform. They do not establish calibrated contact forecasting, an isolated benefit of ACC, or superiority to a matched action-only distillation control. The shared tactile-assisted controller remains part of the reported system.</p><p>Matched training controls, held-out contact-prediction evaluation, and interventions separated from execution rules are important next steps.</p></div></section>
+
+    <section id="resources" class="report-section resources"><div class="reading"><div class="section-marker">08 / Research materials</div><h2>Paper, data, and models.</h2><p>The report follows the manuscript revision supplied on 20 September 2026. Demonstrations and contact arrays are derived from pinned public Hugging Face archives; their provenance is recorded alongside the assets.</p><div class="resource-list"><a href="assets/hapticwam.pdf"><span>Manuscript</span><span>PDF · 9 pages ↗</span></a><a href="https://github.com/Advanced-Robotic-Manipulation/phantom"><span>Implementation</span><span>GitHub ↗</span></a><a href="https://huggingface.co/datasets/armteam/hapticwam-teleop-dataset"><span>Teleoperation dataset</span><span>1,115 episodes ↗</span></a><a href="https://huggingface.co/datasets/armteam/hapticwam-rig-episodes"><span>Recorded robot trials</span><span>Hugging Face ↗</span></a><a href="https://huggingface.co/armteam/hapticwam-teacher"><span>Teacher checkpoint</span><span>Hugging Face ↗</span></a><a href="https://huggingface.co/armteam/hapticwam-student"><span>Student checkpoint</span><span>Hugging Face ↗</span></a><a href="https://huggingface.co/datasets/armteam/hapticwam-sim-episodes"><span>Simulation episodes</span><span>Hugging Face ↗</span></a><a href="assets/provenance.json"><span>Figure and media provenance</span><span>Sources + revisions ↗</span></a></div><div class="citation-heading"><h3>Citation</h3><button id="copy-citation">Copy BibTeX</button></div><pre id="citation">@misc{sannikov2026hapticwam,
+  title = {HapticWAM: Distilling Imagined Touch into a
+    World--Action Model without Inference-Time Tactile Sensing},
+  author = {Sannikov, Mikhail and Mikhalchuk, Ilya and
+    Gubernatorov, Konstantin and Kovalev, Petr and
+    Oluwatobi, Ogunwoye Faith and Tsetserukou, Dzmitry},
+  year = {2026},
+  note = {Manuscript}
+}</pre><span id="copy-status" role="status"></span></div></section>
+  </main>
+  <footer class="wide"><span>HapticWAM · Intelligent Space Robotics Laboratory</span><a href="#top">Back to top ↑</a><p>Research archive media: CC BY 4.0. See source dataset cards for attribution and terms.</p></footer>
+  <noscript><p class="reading">JavaScript is needed for interactive figures. The manuscript, recorded videos, result counts, and source downloads remain available.</p></noscript>
+</body>
+</html>

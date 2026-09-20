@@ -1,0 +1,38 @@
+[
+  {
+    "task": "waffles",
+    "episode": "ep_student_waffles_1789500023_000",
+    "duration": 40.69577729800949,
+    "fps": 15,
+    "model": "Student \u00b7 stu_simft_001000",
+    "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_waffles_1789500023_000/meta.json",
+    "video": "assets/waffles.mp4",
+    "poster": "assets/waffles-poster.webp",
+    "outcome": "Placed (operator verdict)",
+    "seed": 101
+  },
+  {
+    "task": "carton",
+    "episode": "ep_student_Carton_1789499088_000",
+    "duration": 39.69370323797921,
+    "fps": 15,
+    "model": "Student \u00b7 stu_simft_001000",
+    "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_Carton_1789499088_000/meta.json",
+    "video": "assets/carton.mp4",
+    "poster": "assets/carton-poster.webp",
+    "outcome": "Placed (operator verdict)",
+    "seed": 101
+  },
+  {
+    "task": "egg",
+    "episode": "ep_student_egg_1789511366_000",
+    "duration": 39.96165664802538,
+    "fps": 15,
+    "model": "Student \u00b7 stu_simft_001000",
+    "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_egg_1789511366_000/meta.json",
+    "video": "assets/egg.mp4",
+    "poster": "assets/egg-poster.webp",
+    "outcome": "Placed (operator verdict)",
+    "seed": 101
+  }
+]
