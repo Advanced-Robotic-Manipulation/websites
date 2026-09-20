@@ -1,5 +1,8 @@
 import { successChart, forceChart, ablationChart } from './charts.js';
 import { initExplorer } from './explorer.js';
+import { initDiagramViewer } from './diagram-viewer.js';
+
+initDiagramViewer();
 
 function bindSelection(attribute, update) {
   const buttons = document.querySelectorAll(`[${attribute}]`);

@@ -28,7 +28,9 @@ contact episode/channel/fingertip/horizon controls, and citation copy in a brows
 
 Publish the **contents** of this directory to any static host or GitHub Pages.
 All internal paths are relative, so deployment under a project subpath works.
-There is no build step. No remote publication has been performed.
+There is no build step. The live deployment is
+https://advanced-robotic-manipulation.github.io/websites/websites/hapticwam/,
+in the `Advanced-Robotic-Manipulation/websites` repository, branch `main`.
 
 ## Scientific sources
 
@@ -53,7 +55,12 @@ There is no build step. No remote publication has been performed.
 `assets/provenance.json` records pinned HF revisions, episode identifiers, source
 URLs, and derived-asset checksums. Source archives are linked from the figures.
 `setup.webp` and `architecture.webp` are WebP conversions of the supplied paper
-figures. PDF and figure provenance is the same manuscript, not generated art.
+figures. `framework-overview.png` and `framework-internals.png` are byte-for-byte
+original manuscript figures displayed inline in the Method section, with an
+accessible zoom viewer and original-resolution download links. The compact
+teacher/student schematic is a secondary, expandable comparison. The prose
+describes tokenization, the codec, attention masking, ACC gates, and HID losses.
+PDF and figure provenance is the same manuscript, not generated art.
 
 ## Regenerate archived media
 
@@ -75,6 +82,7 @@ videos load on demand and contact arrays load near the explorer.
 - `styles.css`: editorial layout, typography, responsive design.
 - `data.js`, `charts.js`: manuscript data and responsive SVG plots.
 - `explorer.js`: archived contact-field visualization with shared scales.
+- `diagram-viewer.js`: original architecture figures, zoom, and modal focus handling.
 - `app.js`: figure controls, lazy loading, navigation, playback, citation copy.
 - `DESIGN.md`: accepted visual direction and implementation decisions.
 

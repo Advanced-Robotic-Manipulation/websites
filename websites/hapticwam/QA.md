@@ -34,3 +34,13 @@ twin; no live model inference; no fabricated per-trial data or synthetic force
 distributions. No public deployment was performed. The implemented page was
 verified against the accepted scientific-report direction, with the above
 documented adaptation to available research assets.
+
+## Architecture detail revision
+
+The Method section now includes both unmodified manuscript PNGs as prominent
+inline figures (3a framework, 3b internals), followed by detailed explanations
+of tokenization, joint readouts, attention masking, ACC, and HID losses. SHA-256
+checks in the verification script protect the original images. The previous
+compact comparison is secondary and expandable. The modal viewer was checked
+at desktop and mobile sizes: original image loads, 200% zoom changes display
+width, Escape closes, and keyboard focus returns to the initiating button.

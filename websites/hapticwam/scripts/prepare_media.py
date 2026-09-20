@@ -114,7 +114,12 @@ def main():
                 "predictions": [{k: p[k] for k in ["task", "episode", "checkpoint", "source", "route"]} for p in predictions],
                 "license": "Research archive media: CC BY 4.0; see linked dataset cards.",
                 "files": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(OUT.iterdir()) if p.is_file() and p.name != "provenance.json"}}
-    (OUT / "provenance.json").write_text(json.dumps(manifest, indent=2))
+    previous_manifest = OUT / "provenance.json"
+    if previous_manifest.exists():
+        manuscript_figures = json.loads(previous_manifest.read_text()).get("paperFigures")
+        if manuscript_figures:
+            manifest["paperFigures"] = manuscript_figures
+    previous_manifest.write_text(json.dumps(manifest, indent=2))
     print(json.dumps(videos, indent=2))
 
 

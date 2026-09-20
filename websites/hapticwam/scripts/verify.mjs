@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { models, wilson } from '../data.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -39,4 +40,9 @@ for (const record of predictions) {
 const episodes = JSON.parse(readFileSync(resolve(root, 'assets/episodes.json')));
 assert.equal(episodes.length, 3);
 episodes.forEach(e => { assert.ok(existsSync(resolve(root, e.video))); assert.ok(e.duration > 30); });
+const provenance = JSON.parse(readFileSync(resolve(root, 'assets/provenance.json')));
+for (const file of ['framework-overview.png', 'framework-internals.png']) {
+  const hash = createHash('sha256').update(readFileSync(resolve(root, 'assets', file))).digest('hex');
+  assert.equal(hash, provenance.paperFigures[file].sha256, `${file} must preserve the manuscript figure`);
+}
 console.log('Verified local links, manuscript counts, Wilson interval, missing-value handling, media, and contact-array dimensions.');
