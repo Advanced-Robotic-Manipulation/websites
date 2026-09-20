@@ -39,7 +39,7 @@ export function successChart(task) {
   document.querySelector('#result-description').textContent = i < 0 ? 'Student placements · pooled across 50 starts' : 'Student placements';
   const link = document.querySelector('#watch-task');
   link.href = i < 0 ? '#top' : `#video-${task}`;
-  link.innerHTML = `${i < 0 ? 'Watch the example trials' : 'Watch the example trial'} <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#up"></use></svg>`;
+  link.innerHTML = `${i < 0 ? 'Watch the example trials' : 'Watch the example trial'} <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="assets/icons-v2.svg#up"></use></svg>`;
 }
 export function forceChart(task) {
   const svg = document.querySelector('#force-chart'); svg.replaceChildren();

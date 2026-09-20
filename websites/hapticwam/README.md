@@ -77,6 +77,11 @@ Hugging Face marks in `assets/icons.svg` are from Simple Icons (CC0); utility
 icons are local SVG paths. The manuscript links to a local PDF, so it uses a
 document icon rather than implying an arXiv publication that is not linked.
 
+The current `icons-v2.svg` uses Hugging Face's official full-color logo from
+`https://huggingface.co/front/assets/huggingface_logo-noborder.svg`; GitHub and
+arXiv marks are from Simple Icons. The arXiv entry is explicitly disabled and
+labelled “Coming soon” until a manuscript URL is available.
+
 ## Regenerate archived media
 
 Use Python 3.12 with `numpy`, `Pillow`, `requests`, and `zarr<3`, plus `ffmpeg`:
