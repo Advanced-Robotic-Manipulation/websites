@@ -68,6 +68,15 @@ teacher/student schematic is a secondary, expandable comparison. The prose
 describes tokenization, the codec, attention masking, ACC gates, and HID losses.
 PDF and figure provenance is the same manuscript, not generated art.
 
+The inline internals figure now uses the author-supplied `IMG_2636.png`, stored
+unchanged as `framework-internals-2636.png`; the earlier manuscript figure is
+retained. Its hash and origin are in `assets/provenance.json`. The supplied
+figure's trainable-module flame markers are preserved as part of the image.
+Website link decorations use SVG icons, not emoji/text arrows. GitHub and
+Hugging Face marks in `assets/icons.svg` are from Simple Icons (CC0); utility
+icons are local SVG paths. The manuscript links to a local PDF, so it uses a
+document icon rather than implying an arXiv publication that is not linked.
+
 ## Regenerate archived media
 
 Use Python 3.12 with `numpy`, `Pillow`, `requests`, and `zarr<3`, plus `ffmpeg`:

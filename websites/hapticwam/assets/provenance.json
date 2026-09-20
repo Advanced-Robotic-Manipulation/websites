@@ -10,6 +10,11 @@
       "source": "papers/icra_tactile_wm/source/figures/architecture_internal.png",
       "sha256": "20f4a6e9c09332942225b909ded577ca93fce1c7e5bc540915108e39f302767b",
       "transformation": "None; byte-for-byte original"
+    },
+    "framework-internals-2636.png": {
+      "source": "IMG_2636.png — author-supplied update",
+      "sha256": "bd0fee8ee35cb7b50f47fc7189a87b0ca4301fc5f931c20b8f99679aa105719e",
+      "transformation": "None; byte-for-byte original"
     }
   },
   "resultRevision": "34d04a1f6f6ee91910e68cdf7ca44de998ff31ad",
@@ -20,7 +25,7 @@
       "episode": "ep_student_waffles_1789500023_000",
       "duration": 40.69577729800949,
       "fps": 15,
-      "model": "Student \u00b7 stu_simft_001000",
+      "model": "Student · stu_simft_001000",
       "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_waffles_1789500023_000/meta.json",
       "video": "assets/waffles.mp4",
       "poster": "assets/waffles-poster.webp",
@@ -32,7 +37,7 @@
       "episode": "ep_student_Carton_1789499088_000",
       "duration": 39.69370323797921,
       "fps": 15,
-      "model": "Student \u00b7 stu_simft_001000",
+      "model": "Student · stu_simft_001000",
       "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_Carton_1789499088_000/meta.json",
       "video": "assets/carton.mp4",
       "poster": "assets/carton-poster.webp",
@@ -44,7 +49,7 @@
       "episode": "ep_student_egg_1789511366_000",
       "duration": 39.96165664802538,
       "fps": 15,
-      "model": "Student \u00b7 stu_simft_001000",
+      "model": "Student · stu_simft_001000",
       "source": "https://huggingface.co/datasets/armteam/hapticwam-rig-episodes/resolve/fedce3c41d122b9f2cba6584e7aecce68a365a23/20260915_experiment/ep_student_egg_1789511366_000/meta.json",
       "video": "assets/egg.mp4",
       "poster": "assets/egg-poster.webp",

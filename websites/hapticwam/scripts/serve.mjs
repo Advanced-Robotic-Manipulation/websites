@@ -5,7 +5,7 @@ import { stat } from 'node:fs/promises';
 import { dirname, resolve, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.mp4':'video/mp4', '.webp':'image/webp', '.png':'image/png', '.pdf':'application/pdf', '.csv':'text/csv' };
+const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.mp4':'video/mp4', '.webp':'image/webp', '.png':'image/png', '.svg':'image/svg+xml', '.pdf':'application/pdf', '.csv':'text/csv' };
 const port = Number(process.env.PORT || 4173);
 http.createServer(async (req, res) => {
   try {

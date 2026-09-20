@@ -1,4 +1,4 @@
-import { successChart, forceChart, ablationChart } from './charts.js';
+import { successChart, forceChart, ablationChart } from './charts.js?v=icons-2636';
 import { initRollout } from './rollout.js?v=heatmaps-2';
 import { initDiagramViewer } from './diagram-viewer.js';
 

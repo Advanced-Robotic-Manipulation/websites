@@ -41,7 +41,7 @@ const episodes = JSON.parse(readFileSync(resolve(root, 'assets/episodes.json')))
 assert.equal(episodes.length, 3);
 episodes.forEach(e => { assert.ok(existsSync(resolve(root, e.video))); assert.ok(e.duration > 30); });
 const provenance = JSON.parse(readFileSync(resolve(root, 'assets/provenance.json')));
-for (const file of ['framework-overview.png', 'framework-internals.png']) {
+for (const file of ['framework-overview.png', 'framework-internals.png', 'framework-internals-2636.png']) {
   const hash = createHash('sha256').update(readFileSync(resolve(root, 'assets', file))).digest('hex');
   assert.equal(hash, provenance.paperFigures[file].sha256, `${file} must preserve the manuscript figure`);
 }
