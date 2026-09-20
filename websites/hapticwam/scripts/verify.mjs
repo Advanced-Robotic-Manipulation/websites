@@ -11,7 +11,7 @@ const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
 assert.equal(ids.length, new Set(ids).size, 'HTML IDs must be unique');
 for (const [, url] of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
   if (url.startsWith('#')) assert.ok(ids.includes(url.slice(1)), `Missing anchor ${url}`);
-  else if (!/^(https?:|data:)/.test(url)) assert.ok(existsSync(resolve(root, url)), `Missing asset ${url}`);
+  else if (!/^(https?:|data:)/.test(url)) assert.ok(existsSync(resolve(root, url.split(/[?#]/)[0])), `Missing asset ${url}`);
 }
 assert.deepEqual(models.map(m => m.counts.reduce((a, b) => a + b, 0)), [30, 41, 10, 9]);
 const egg = wilson(5, 10).map(v => (v * 100).toFixed(1));

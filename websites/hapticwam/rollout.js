@@ -73,7 +73,8 @@ export async function initRollout() {
     status.textContent = ''; drawChart();
   }
   try {
-    const response = await fetch('assets/rollouts.json');
+    // A page query does not invalidate cached modules or their data requests.
+    const response = await fetch('assets/rollouts.json?v=heatmaps-2', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Manifest unavailable');
     archive = await response.json();
     $('#rollout-content').hidden = false;

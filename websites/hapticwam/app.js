@@ -1,5 +1,5 @@
 import { successChart, forceChart, ablationChart } from './charts.js';
-import { initRollout } from './rollout.js';
+import { initRollout } from './rollout.js?v=heatmaps-2';
 import { initDiagramViewer } from './diagram-viewer.js';
 
 initDiagramViewer();
