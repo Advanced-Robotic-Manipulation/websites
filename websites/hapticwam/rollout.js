@@ -64,9 +64,10 @@ export async function initRollout() {
     $('#rollout-outcome').textContent = `${state.model === 'student' ? 'Student' : 'Teacher'} · seed 101 · ${episode.outcome} (operator verdict)`;
     $('#rollout-scope').textContent = state.model === 'student'
       ? 'Student: tactile streams are recorded for inspection, not supplied to the student model. The executor uses tactile feedback; the model retains scene RGB, proprioception and motor-current-derived arm wrench.'
-      : 'Teacher: fingertip observations are available to the model. These are recorded sensor images and measured wrench signals—not generated contact predictions.';
+      : 'Teacher: fingertip observations are available to the model. These are heatmaps of recorded sensor deformation and measured wrench signals—not generated contact predictions.';
     const offsets = episode.maxImageOffsetMs;
-    $('#rollout-provenance').textContent = `${episode.episode}. Nearest-frame alignment: maximum camera offset ${offsets.camera_scene_color} ms; left tactile ${offsets.tactile_left_infer_img} ms; right tactile ${offsets.tactile_right_infer_img} ms. Playback is limited to the shared recording interval.`;
+    $('#rollout-provenance').textContent = `${episode.episode}. Nearest-frame alignment: maximum camera offset ${offsets.camera_scene_color} ms; left field ${offsets.tactile_left_fields_ds} ms; right field ${offsets.tactile_right_fields_ds} ms. Playback is limited to the shared recording interval. Heatmaps use channel 2 (depth) of each recorded 72 × 96 × 8 fields_ds stream, displayed as absolute values without per-frame normalization.`;
+    $('#heatmap-max').textContent = episode.heatmap.scale[1].toFixed(1);
     document.querySelectorAll('[data-rollout-task]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.rolloutTask === state.task)));
     document.querySelectorAll('[data-rollout-model]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.rolloutModel === state.model)));
     status.textContent = ''; drawChart();

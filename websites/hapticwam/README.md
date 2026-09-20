@@ -45,7 +45,11 @@ in the `Advanced-Robotic-Manipulation/websites` repository, branch `main`.
   preserving real-time duration. No interpolated frames or generated imagery.
 - Figure 4: six **recorded rollouts**, student and teacher for each task at seed
   101, including unsuccessful teacher trials. A single composite video keeps
-  camera and both native grayscale tactile images synchronized. Recorded signed
+  camera and both recorded tactile deformation heatmaps synchronized. Heatmaps
+  use absolute depth (channel 2 of each 72×96×8 fields_ds stream), with one fixed
+  native-unit scale per task (0–0.4 waffles/carton; 0–1 egg), shared across teacher,
+  student and both fingers, no per-frame contrast
+  normalization. They are not pressure in newtons. Recorded signed
   fingertip Fz traces use original timestamps and a shared force axis per task.
   Tactile images are not predictions, nor student-model inputs. The previous
   offline contact-prediction assets remain archived but are no longer displayed.
@@ -79,8 +83,8 @@ the repository. Browser assets are written to `assets/`. The generated MP4s
 for the opening demos are about 1–1.5 MB each. Figure 4 adds six composite clips,
 roughly 0.8–4.5 MB each; only the selected clip is loaded. Its provenance,
 synchronization offsets and un-smoothed force traces are in `assets/rollouts.json`.
-The camera is about 15 Hz, tactile images about 4 Hz and wrench about 8 Hz;
-15 fps playback repeats the nearest recorded tactile image, not synthetic frames.
+The camera is about 15 Hz, tactile fields and wrench about 8 Hz;
+15 fps playback repeats the nearest recorded tactile field, not synthetic frames.
 
 ## Files
 

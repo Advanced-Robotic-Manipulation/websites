@@ -51,6 +51,10 @@ assert.equal(new Set(rollouts.episodes.map(e => `${e.task}/${e.model}`)).size, 6
 for (const e of rollouts.episodes) {
   assert.equal(e.seed, 101);
   assert.equal(e.forceUnit, 'N');
+  assert.equal(e.heatmap.channel, 2);
+  assert.deepEqual(e.heatmap.shape, [72, 96]);
+  assert.deepEqual(e.heatmap.scale, [0, e.task === 'egg' ? 1 : .4]);
+  assert.ok(e.heatmap.sourceStreams.every(s => s.endsWith('_fields_ds')));
   assert.equal(e.label, e.model === 'student' ? 'label:stu_simft_001000' : 'label:v6_simft2k');
   assert.ok(e.duration > 5);
   assert.ok(existsSync(resolve(root, e.video)) && existsSync(resolve(root, e.poster)));
