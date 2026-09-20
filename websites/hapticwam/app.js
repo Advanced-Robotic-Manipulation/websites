@@ -1,5 +1,5 @@
 import { successChart, forceChart, ablationChart } from './charts.js';
-import { initExplorer } from './explorer.js';
+import { initRollout } from './rollout.js';
 import { initDiagramViewer } from './diagram-viewer.js';
 
 initDiagramViewer();
@@ -28,9 +28,9 @@ window.matchMedia('(max-width:600px)').addEventListener('change', () => {
   ablationChart();
 });
 
-// Fetch the contact arrays only when approaching their figure.
+// Fetch rollout metadata only when approaching Figure 4.
 const explorerObserver = new IntersectionObserver(entries => {
-  if (entries.some(e => e.isIntersecting)) { initExplorer(); explorerObserver.disconnect(); }
+  if (entries.some(e => e.isIntersecting)) { initRollout(); explorerObserver.disconnect(); }
 }, { rootMargin: '600px' });
 explorerObserver.observe(document.querySelector('#explorer'));
 
@@ -65,7 +65,7 @@ document.querySelectorAll('video').forEach(video => {
     if (video.parentElement.querySelector('.media-error')) return;
     const note = document.createElement('p'); note.className = 'media-error';
     note.textContent = 'Playback unavailable. Download the recording: ';
-    const link = document.createElement('a'); link.href = video.querySelector('source').src;
+    const link = document.createElement('a'); link.href = video.currentSrc || video.querySelector('source')?.src || video.src;
     link.textContent = 'MP4'; note.append(link); video.after(note);
   });
 });

@@ -43,10 +43,12 @@ in the `Advanced-Robotic-Manipulation/websites` repository, branch `main`.
   filenames (which also use `ep_student` for some baseline recordings).
   Timestamped camera streams are resampled to 15 fps with nearest-frame matching,
   preserving real-time duration. No interpolated frames or generated imagery.
-- Contact explorer: **offline teacher reruns**, not online student predictions.
-  The public NPZ archives contain predictions, targets, and recorded camera
-  frames. The explorer shows the three saved future horizons, two fingers,
-  contact mask, and normal-force change. It is not an accuracy benchmark.
+- Figure 4: six **recorded rollouts**, student and teacher for each task at seed
+  101, including unsuccessful teacher trials. A single composite video keeps
+  camera and both native grayscale tactile images synchronized. Recorded signed
+  fingertip Fz traces use original timestamps and a shared force axis per task.
+  Tactile images are not predictions, nor student-model inputs. The previous
+  offline contact-prediction assets remain archived but are no longer displayed.
 - Force charts show published means and standard deviations, not invented raw
   distributions. Missing data remain missing. Wilson intervals are descriptive.
 - Teacher/student model observations and the tactile-assisted executor are
@@ -68,20 +70,25 @@ Use Python 3.12 with `numpy`, `Pillow`, `requests`, and `zarr<3`, plus `ffmpeg`:
 
 ```sh
 python scripts/prepare_media.py
+python scripts/prepare_rollouts.py
 ```
 
 The script downloads only selected public streams and arrays at pinned commits.
 Raw inputs are cached under the operating system temporary directory, outside
 the repository. Browser assets are written to `assets/`. The generated MP4s
-are about 1–1.5 MB each. The report is approximately 11 MB including the PDF;
-videos load on demand and contact arrays load near the explorer.
+for the opening demos are about 1–1.5 MB each. Figure 4 adds six composite clips,
+roughly 0.8–4.5 MB each; only the selected clip is loaded. Its provenance,
+synchronization offsets and un-smoothed force traces are in `assets/rollouts.json`.
+The camera is about 15 Hz, tactile images about 4 Hz and wrench about 8 Hz;
+15 fps playback repeats the nearest recorded tactile image, not synthetic frames.
 
 ## Files
 
 - `index.html`: report prose, accessible structure, resource and source links.
 - `styles.css`: editorial layout, typography, responsive design.
 - `data.js`, `charts.js`: manuscript data and responsive SVG plots.
-- `explorer.js`: archived contact-field visualization with shared scales.
+- `rollout.js`: synchronized recorded-video playback, force plots and seeking.
+- `explorer.js`: previous contact-field viewer, retained but no longer imported.
 - `diagram-viewer.js`: original architecture figures, zoom, and modal focus handling.
 - `app.js`: figure controls, lazy loading, navigation, playback, citation copy.
 - `DESIGN.md`: accepted visual direction and implementation decisions.

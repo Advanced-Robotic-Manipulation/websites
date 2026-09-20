@@ -45,4 +45,23 @@ for (const file of ['framework-overview.png', 'framework-internals.png']) {
   const hash = createHash('sha256').update(readFileSync(resolve(root, 'assets', file))).digest('hex');
   assert.equal(hash, provenance.paperFigures[file].sha256, `${file} must preserve the manuscript figure`);
 }
-console.log('Verified local links, manuscript counts, Wilson interval, missing-value handling, media, and contact-array dimensions.');
+const rollouts = JSON.parse(readFileSync(resolve(root, 'assets/rollouts.json')));
+assert.equal(rollouts.episodes.length, 6);
+assert.equal(new Set(rollouts.episodes.map(e => `${e.task}/${e.model}`)).size, 6);
+for (const e of rollouts.episodes) {
+  assert.equal(e.seed, 101);
+  assert.equal(e.forceUnit, 'N');
+  assert.equal(e.label, e.model === 'student' ? 'label:stu_simft_001000' : 'label:v6_simft2k');
+  assert.ok(e.duration > 5);
+  assert.ok(existsSync(resolve(root, e.video)) && existsSync(resolve(root, e.poster)));
+  assert.ok(Object.values(e.maxImageOffsetMs).every(v => v < 150));
+  for (const samples of Object.values(e.force)) {
+    assert.ok(samples.length > 20);
+    samples.forEach(([t, value], i) => {
+      assert.ok(Number.isFinite(t) && Number.isFinite(value));
+      assert.ok(t >= 0 && t <= e.duration + 1 / e.fps);
+      if (i) assert.ok(t > samples[i - 1][0]);
+    });
+  }
+}
+console.log('Verified links, manuscript data, original figures, six seed-matched rollouts, timestamps, force traces, synchronization bounds, and archived contact arrays.');
