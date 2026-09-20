@@ -29,8 +29,9 @@ contact episode/channel/fingertip/horizon controls, and citation copy in a brows
 Publish the **contents** of this directory to any static host or GitHub Pages.
 All internal paths are relative, so deployment under a project subpath works.
 There is no build step. The live deployment is
-https://advanced-robotic-manipulation.github.io/websites/websites/hapticwam/,
-in the `Advanced-Robotic-Manipulation/websites` repository, branch `main`.
+https://advanced-robotic-manipulation.github.io/websites/hapticwam/,
+in the `Advanced-Robotic-Manipulation/websites` repository, branch `main`,
+directory `hapticwam/`. The previous nested URL redirects to this address.
 
 ## Scientific sources
 
