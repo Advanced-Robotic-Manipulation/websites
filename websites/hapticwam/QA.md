@@ -44,3 +44,21 @@ checks in the verification script protect the original images. The previous
 compact comparison is secondary and expandable. The modal viewer was checked
 at desktop and mobile sizes: original image loads, 200% zoom changes display
 width, Escape closes, and keyboard focus returns to the initiating button.
+
+## Direct figure interaction revision
+
+Image links now open the dialog directly (and retain original-PNG fallback
+without JavaScript). The separate Enlarge buttons and zoom slider are removed.
+Desktop mouse movement magnifies to 2.5x and traverses the figure; leaving the
+image viewport restores the fitted view. Touch uses focal-point-preserving
+pinch (1–6x) and bounded one-finger pan. Reset, Close, Escape, focus restoration,
+and keyboard +/−, arrow keys, and 0 remain available.
+
+Built-in preview reported no automation host; verification used agent-browser
+and Playwright Chromium. Real CDP touch events verified pinch and pan, plus reset,
+close, focus return, 320px containment, and no page errors. Desktop hover and
+pointer-leave reset passed at 1440×1000. Mobile checked at 390×844.
+Before/after screenshots were visually inspected for retained typography,
+palette, figure fidelity, toolbar spacing, and mobile containment. Only the
+requested interaction chrome changed; report copy and original images are intact.
+Touch checks are emulated Chromium, not a physical iOS device.

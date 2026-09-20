@@ -67,8 +67,8 @@
       </div>
 
       <figure class="wide paper-diagram" id="framework-overview">
-        <div class="figure-toolbar"><h3>Framework overview</h3><div class="diagram-actions"><button data-enlarge="framework-image">Enlarge figure</button><a href="assets/framework-overview.png" target="_blank" rel="noopener">Original PNG ↗</a></div></div>
-        <a class="paper-image-link" href="assets/framework-overview.png" target="_blank" rel="noopener" aria-label="Open full-resolution HapticWAM framework overview"><img id="framework-image" src="assets/framework-overview.png" width="1952" height="1278" alt="Full HapticWAM framework from the paper: text, scene RGB and gel images, FiLM-conditioned mechanical fields, robot state and wrist history enter a joint backbone; video, contact and action tokens feed their respective decoders, with event and uncertainty heads on contact states." loading="lazy"></a>
+        <div class="figure-toolbar"><h3>Framework overview</h3><div class="diagram-actions"><a href="assets/framework-overview.png" target="_blank" rel="noopener">Original PNG ↗</a></div></div>
+        <a class="paper-image-link" data-enlarge="framework-image" aria-haspopup="dialog" href="assets/framework-overview.png" aria-label="Open full-resolution HapticWAM framework overview"><img id="framework-image" src="assets/framework-overview.png" width="2450" height="1604" alt="Full HapticWAM framework from the paper: text, scene RGB and gel images, FiLM-conditioned mechanical fields, robot state and wrist history enter a joint backbone; video, contact and action tokens feed their respective decoders, with event and uncertainty heads on contact states." loading="lazy"></a>
         <figcaption><span class="figure-number">Figure 3a</span> Framework overview, reproduced from the manuscript at its original resolution. Solid tokens denote clean conditioning; hatched tokens denote noisy generated groups. The dashed fingertip region contains the teacher-only observations. Flame symbols identify trainable modules; the video backbone is adapted with LoRA while its base weights remain frozen.</figcaption>
       </figure>
 
@@ -101,8 +101,8 @@
       </div>
 
       <figure class="wide paper-diagram" id="framework-internals">
-        <div class="figure-toolbar"><h3>Framework internals</h3><div class="diagram-actions"><button data-enlarge="internals-image">Enlarge figure</button><a href="assets/framework-internals.png" target="_blank" rel="noopener">Original PNG ↗</a></div></div>
-        <a class="paper-image-link" href="assets/framework-internals.png" target="_blank" rel="noopener" aria-label="Open full-resolution HapticWAM internal architecture"><img id="internals-image" src="assets/framework-internals.png" width="1750" height="1408" alt="Full internal architecture from the paper: 28 DiT blocks; ACC fusion of wrench, visual tokens, previous action and imagined contact into gates, event distributions and typed attention bias; HID teacher and student branches connected by contact-future, event and behavior losses plus ground-truth supervision." loading="lazy"></a>
+        <div class="figure-toolbar"><h3>Framework internals</h3><div class="diagram-actions"><a href="assets/framework-internals.png" target="_blank" rel="noopener">Original PNG ↗</a></div></div>
+        <a class="paper-image-link" data-enlarge="internals-image" aria-haspopup="dialog" href="assets/framework-internals.png" aria-label="Open full-resolution HapticWAM internal architecture"><img id="internals-image" src="assets/framework-internals.png" width="1934" height="1556" alt="Full internal architecture from the paper: 28 DiT blocks; ACC fusion of wrench, visual tokens, previous action and imagined contact into gates, event distributions and typed attention bias; HID teacher and student branches connected by contact-future, event and behavior losses plus ground-truth supervision." loading="lazy"></a>
         <figcaption><span class="figure-number">Figure 3b</span> Backbone, Anticipatory Contact Coupling (ACC), and Haptic-Imagination Distillation (HID), reproduced from the manuscript. During HID, the teacher is frozen. Only contact-future matching uses the event/uncertainty weights. The teacher’s reactive gate is driven by observed tactile change; the student retains only the anticipatory branch.</figcaption>
       </figure>
 
@@ -191,8 +191,8 @@
   </main>
   <footer class="wide"><span>HapticWAM · Intelligent Space Robotics Laboratory</span><a href="#top">Back to top ↑</a><p>Research archive media: CC BY 4.0. See source dataset cards for attribution and terms.</p></footer>
   <dialog id="diagram-viewer" aria-labelledby="diagram-viewer-title">
-    <div class="viewer-toolbar"><h2 id="diagram-viewer-title">Architecture figure</h2><div class="viewer-controls"><label for="diagram-zoom">Zoom</label><input id="diagram-zoom" type="range" min="100" max="300" step="25" value="100"><output id="diagram-zoom-value" for="diagram-zoom">100%</output><button id="diagram-close" autofocus>Close</button></div></div>
-    <div class="viewer-scroll" tabindex="0" aria-label="Architecture figure, scroll to inspect when zoomed"><img id="diagram-viewer-image" alt=""></div>
+    <div class="viewer-toolbar"><h2 id="diagram-viewer-title">Architecture figure</h2><div class="viewer-controls"><span class="viewer-mouse-hint">Hover to magnify</span><span class="viewer-touch-hint">Pinch to zoom · drag to pan</span><button id="diagram-reset">Reset</button><button id="diagram-close" autofocus>Close</button></div></div>
+    <div class="viewer-scroll" tabindex="0" aria-label="Architecture figure. Pinch to zoom and drag to pan, or hover with a mouse. Keyboard: plus and minus to zoom, arrow keys to pan, zero to reset."><img id="diagram-viewer-image" alt="" draggable="false"></div>
   </dialog>
   <noscript><p class="reading">JavaScript is needed for interactive figures. The manuscript, recorded videos, result counts, and source downloads remain available.</p></noscript>
 </body>
