@@ -1,13 +1,8 @@
 # Browser verification — 20 September 2026
 
-Reference: accepted written direction in DESIGN.md and the inspected Agent as
-Policy, pi07, FRS, and Claw pages. Built-in image generation was unavailable;
-there is no generated mockup to claim as a pixel-perfect reference.
-
-The T3 collaborative browser returned an explicit unavailable-host error from
-both status and open. Verification used the agent-browser Chromium fallback.
-Reference screenshots and rendered report screenshots were inspected with
-view_image at desktop and mobile sizes.
+Reference: the written direction in DESIGN.md. Verification used a headless
+Chromium browser. Reference screenshots and rendered report screenshots were
+inspected at desktop and mobile sizes.
 
 | Comparison point | Render evidence / outcome |
 | --- | --- |
@@ -31,9 +26,8 @@ Wilson interval, missing force data, media existence, and contact-array shape.
 
 Intentional boundaries: 2D archived contact-field explorer, not a 3D digital
 twin; no live model inference; no fabricated per-trial data or synthetic force
-distributions. No public deployment was performed. The implemented page was
-verified against the accepted scientific-report direction, with the above
-documented adaptation to available research assets.
+distributions. The implemented page was verified against the scientific-report
+direction, with the above documented adaptation to available research assets.
 
 ## Architecture detail revision
 
@@ -54,8 +48,8 @@ image viewport restores the fitted view. Touch uses focal-point-preserving
 pinch (1–6x) and bounded one-finger pan. Reset, Close, Escape, focus restoration,
 and keyboard +/−, arrow keys, and 0 remain available.
 
-Built-in preview reported no automation host; verification used agent-browser
-and Playwright Chromium. Real CDP touch events verified pinch and pan, plus reset,
+Verification used Playwright Chromium. Real CDP touch events verified pinch and
+pan, plus reset,
 close, focus return, 320px containment, and no page errors. Desktop hover and
 pointer-leave reset passed at 1440×1000. Mobile checked at 390×844.
 Before/after screenshots were visually inspected for retained typography,

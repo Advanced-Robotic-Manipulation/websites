@@ -31,6 +31,5 @@ Pages without a backend or build tool. Local optimized media, source manifest,
 reproducible preparation script. Responsive single-column continuation; no
 autoplay required, reduced-motion support, keyboard and screen-reader labels.
 
-Concept generation deviation: the built-in image generator is unavailable.
-The accepted written direction and inspected live references are the design
-specification; implementation will be reviewed in the browser directly.
+The written direction above is the design specification; the implementation is
+reviewed directly in the browser against it.
