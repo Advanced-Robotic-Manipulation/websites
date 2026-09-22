@@ -1,13 +1,13 @@
 {
   "paperFigures": {
-    "revision": "Konstantin 3, supplied 2026-09-20",
+    "revision": "revision 3, supplied 2026-09-20",
     "framework-overview.png": {
-      "source": "papers/icra_tactile_wm/source/figures/architecture.png",
+      "source": "manuscript figure source: architecture.png",
       "sha256": "8fba0908666a710a36a65a81c4f5eab6c7a69c052edf0a21bf278e0707b41cd5",
       "transformation": "None; byte-for-byte original"
     },
     "framework-internals.png": {
-      "source": "papers/icra_tactile_wm/source/figures/architecture_internal.png",
+      "source": "manuscript figure source: architecture_internal.png",
       "sha256": "20f4a6e9c09332942225b909ded577ca93fce1c7e5bc540915108e39f302767b",
       "transformation": "None; byte-for-byte original"
     },
