@@ -35,9 +35,8 @@ directory `hapticwam/`. The previous nested URL redirects to this address.
 
 ## Scientific sources
 
-- Text and aggregate numbers: `papers/icra_tactile_wm/source/`, the supplied
-  Konstantin 3 revision of 20 September 2026. `assets/hapticwam.pdf` is its
-  compiled nine-page manuscript. `assets/results.csv` exposes the exact counts
+- Text and aggregate numbers: the manuscript sources, revision 3 of
+  20 September 2026. `assets/hapticwam.pdf` is the compiled manuscript. `assets/results.csv` exposes the exact counts
   and force summaries. `data.js` holds the same values for charts.
 - Videos: seed 101 of the deployed student (`stu_simft_001000`), one per task.
   Episode identity is checked against `meta.json`, rather than inferred from
