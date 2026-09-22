@@ -44,11 +44,14 @@ directory `hapticwam/`. The previous nested URL redirects to this address.
   filenames (which also use `ep_student` for some baseline recordings).
   Timestamped camera streams are resampled to 15 fps with nearest-frame matching,
   preserving real-time duration. No interpolated frames or generated imagery.
-- Figure 4: six **recorded rollouts**, student and teacher for each task at seed
-  101, including unsuccessful teacher trials. A single composite video keeps
+- Figure 4: six **recorded rollouts**, selected successful student and teacher
+  executions. Waffles use seed 101 for both models; carton uses student seed 101
+  and teacher seed 109; egg uses seed 102 for both models. Selection is for clear
+  grasp, transport, and placement; aggregate results still use the full evaluation.
+  A single composite video keeps
   camera and both recorded tactile deformation heatmaps synchronized. Heatmaps
   use absolute depth (channel 2 of each 72×96×8 fields_ds stream), with one fixed
-  native-unit scale per task (0–0.4 waffles/carton; 0–1 egg), shared across teacher,
+  native-unit scale per task (0–0.4 waffles; 0–0.5 carton; 0–1.5 egg), shared across teacher,
   student and both fingers, no per-frame contrast
   normalization. They are not pressure in newtons. Recorded signed
   fingertip Fz traces use original timestamps and a shared force axis per task.

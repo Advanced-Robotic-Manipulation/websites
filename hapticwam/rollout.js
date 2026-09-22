@@ -61,7 +61,7 @@ export async function initRollout() {
     video.poster = episode.poster; video.src = episode.video; video.load();
     timeline.max = episode.duration; timeline.value = '0';
     $('#rollout-source').href = episode.source;
-    $('#rollout-outcome').textContent = `${state.model === 'student' ? 'Student' : 'Teacher'} · seed 101 · ${episode.outcome} (operator verdict)`;
+    $('#rollout-outcome').textContent = `${state.model === 'student' ? 'Student' : 'Teacher'} · seed ${episode.seed} · ${episode.outcome} (operator verdict)`;
     $('#rollout-scope').textContent = state.model === 'student'
       ? 'Student: tactile streams are recorded for inspection, not supplied to the student model. The executor uses tactile feedback; the model retains scene RGB, proprioception and motor-current-derived arm wrench.'
       : 'Teacher: fingertip observations are available to the model. These are heatmaps of recorded sensor deformation and measured wrench signals—not generated contact predictions.';
@@ -74,7 +74,7 @@ export async function initRollout() {
   }
   try {
     // A page query does not invalidate cached modules or their data requests.
-    const response = await fetch('assets/rollouts.json?v=heatmaps-2', { cache: 'no-cache' });
+    const response = await fetch('assets/rollouts.json?v=selected-rollouts-1', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Manifest unavailable');
     archive = await response.json();
     $('#rollout-content').hidden = false;
