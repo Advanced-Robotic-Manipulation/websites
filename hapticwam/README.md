@@ -75,13 +75,12 @@ retained. Its hash and origin are in `assets/provenance.json`. The supplied
 figure's trainable-module flame markers are preserved as part of the image.
 Website link decorations use SVG icons, not emoji/text arrows. GitHub and
 Hugging Face marks in `assets/icons.svg` are from Simple Icons (CC0); utility
-icons are local SVG paths. The manuscript links to a local PDF, so it uses a
-document icon rather than implying an arXiv publication that is not linked.
+icons are local SVG paths. The manuscript is available both as a local PDF and
+at `https://arxiv.org/abs/2609.23888`.
 
 The current `icons-v2.svg` uses Hugging Face's official full-color logo from
 `https://huggingface.co/front/assets/huggingface_logo-noborder.svg`; GitHub and
-arXiv marks are from Simple Icons. The arXiv entry is explicitly disabled and
-labelled “Coming soon” until a manuscript URL is available.
+arXiv marks are from Simple Icons.
 
 ## Regenerate archived media
 
@@ -113,4 +112,4 @@ The camera is about 15 Hz, tactile fields and wrench about 8 Hz;
 - `DESIGN.md`: accepted visual direction and implementation decisions.
 
 Research archive media are CC BY 4.0; consult the linked dataset cards. Citation
-is a manuscript entry, without an invented publication venue or arXiv ID.
+metadata includes the published arXiv identifier, `2609.23888`.
