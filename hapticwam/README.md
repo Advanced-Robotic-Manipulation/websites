@@ -1,8 +1,8 @@
 # HapticWAM technical report website
 
 A static, English-language research report with locally hosted real-robot video,
-interactive scientific figures, and an offline contact-prediction explorer.
-No npm dependencies, backend, external fonts, or runtime Hugging Face requests.
+interactive scientific figures, and a live dot-matrix view of recorded rollouts.
+No npm dependencies, backend, or runtime Hugging Face requests. The only external request is the Geist Mono web font from Google Fonts, with a system monospace fallback.
 
 ## Preview
 
@@ -105,13 +105,11 @@ The camera is about 15 Hz, tactile fields and wrench about 8 Hz;
 ## Files
 
 - `index.html`: report prose, accessible structure, resource and source links.
-- `styles.css`: editorial layout, typography, responsive design.
-- `data.js`, `charts.js`: manuscript data and responsive SVG plots.
-- `rollout.js`: synchronized recorded-video playback, force plots and seeking.
-- `explorer.js`: previous contact-field viewer, retained but no longer imported.
-- `diagram-viewer.js`: original architecture figures, zoom, and modal focus handling.
-- `app.js`: figure controls, lazy loading, navigation, playback, citation copy.
-- `DESIGN.md`: accepted visual direction and implementation decisions.
+- `style.css`: monospace dot-matrix design, light and dark themes, responsive layout.
+- `data.js`: manuscript numbers (counts, forces, intervention) shared by the charts and `scripts/verify.mjs`.
+- `app.js`: figure controls, HTML dot charts, the synchronized rollout viewer, figure zoom, navigation, theme, citation copy.
+- `dots.js`: the live dot-matrix screen at the top of the page (recorded rollout redrawn as dots, pointer response, force-strip scrubbing).
+- `DESIGN.md`: design direction and implementation decisions.
 
 Research archive media are CC BY 4.0; consult the linked dataset cards. Citation
 metadata includes the published arXiv identifier, `2609.23888`.
